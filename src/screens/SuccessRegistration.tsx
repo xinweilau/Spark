@@ -2,11 +2,11 @@ import { StatusBar } from 'expo-status-bar';
 import { Pressable, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
+import tw from 'twrnc'
 
 // Use require to import the SVG file
 const welcome = require('../../assets/images/welcome.svg');
 
-import tw from 'twrnc'
 
 export default function SuccessRegistration() {
     return (
@@ -23,7 +23,7 @@ export default function SuccessRegistration() {
 
             <View style={tw`flex items-center justify-center h-1/5`}>
                 <Pressable style={tw`w-full`}>
-                    <LinearGradient style={tw`rounded-full w-full shadow-md shadow-[#95adfe4d]`} colors={['#9DCEFF', '#8658E8']} locations={[0.7, 0]} start={{ x: 0.2, y: 0.5 }} end={{ x: 1, y: 0.5 }}>
+                    <LinearGradient style={tw`rounded-full w-full shadow-lg`} colors={['#9DCEFF', '#8658E8']} locations={[0.7, 0]} start={{ x: 0.2, y: 0.5 }} end={{ x: 1, y: 0.5 }}>
                         <Text style={tw`px-8 py-4 text-white text-center font-bold`}>Go To Home</Text>
                     </LinearGradient>
                 </Pressable>
