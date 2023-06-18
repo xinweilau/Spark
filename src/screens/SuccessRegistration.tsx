@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Button } from '@rneui/themed';
 import tw from 'twrnc'
 
 // Use require to import the SVG file
@@ -22,11 +23,18 @@ export default function SuccessRegistration() {
             </View>
 
             <View style={tw`flex items-center justify-center h-1/5`}>
-                <Pressable style={tw`w-full`}>
-                    <LinearGradient style={tw`rounded-full w-full shadow-lg`} colors={['#9DCEFF', '#8658E8']} locations={[0.7, 0]} start={{ x: 0.2, y: 0.5 }} end={{ x: 1, y: 0.5 }}>
-                        <Text style={tw`px-8 py-4 text-white text-center font-bold`}>Go To Home</Text>
-                    </LinearGradient>
-                </Pressable>
+                <Button
+                    ViewComponent={LinearGradient} // Don't forget this!
+                    style={tw` w-full `}
+                    containerStyle={tw`w-full rounded-full`}
+                    linearGradientProps={{
+                        colors: ['#8658E8', '#9DCEFF'],
+                        start: { x: 0.2, y: 0.5 },
+                        end: { x: 1, y: 0.5 },
+                    }}
+                >
+                    Go To Home
+                </Button>
             </View>
             <StatusBar style="auto" />
         </View >
