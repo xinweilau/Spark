@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Image } from 'expo-image';
 import { View, Text } from 'react-native';
-import { Button, IconButton, TextInput } from 'react-native-paper';
+import { Button, IconButton, TextInput, TouchableRipple } from 'react-native-paper';
 import tw from 'twrnc';
 import { LinearGradient } from 'expo-linear-gradient';
 import useAuth from '../utils/useAuth';
 import { Link } from '@react-navigation/native';
+import GradientButton from '../components/GradientButton';
 
 const login = require('../../assets/images/login.svg');
 
@@ -59,11 +60,18 @@ export default function Login() {
                         onPress={() => console.log("Help Pressed")}>
                         Need Help?
                     </Link>
-                    <LinearGradient style={tw`rounded-tl-lg rounded-tr-lg rounded-bl-lg w-7/8 shadow-lg p-4`} colors={['#8658E8', '#4718AD']} locations={[0, 1]} start={{ x: 0.0, y: 1 }} end={{ x: 1, y: 0 }}>
-                        <Button style={tw`w-full`} textColor='white' onPress={handleLogin}>
-                            PROCEED
-                        </Button>
-                    </LinearGradient>
+
+                    <GradientButton
+                        onPress={handleLogin}
+                        buttonLength={tw`w-7/8`}
+                        buttonStyle={tw`rounded-tl-lg rounded-tr-lg rounded-bl-lg w-full shadow-lg p-7`}
+                        textStyle={tw`text-white font-bold`}
+                        colors={['#8658E8', '#4718AD']}
+                        locations={[0, 1]}
+                        start={{ x: 0.0, y: 1 }}
+                        end={{ x: 1, y: 0 }}>
+                        PROCEED
+                    </GradientButton>
                 </View>
 
                 <View style={tw`flex flex-col items-center gap-4`}>

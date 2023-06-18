@@ -4,6 +4,7 @@ import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Button } from 'react-native-paper';
 import tw from 'twrnc'
+import GradientButton from '../components/GradientButton';
 
 // Use require to import the SVG file
 const welcome = require('../../assets/images/welcome.svg');
@@ -23,9 +24,17 @@ export default function SuccessRegistration() {
             </View>
 
             <View style={tw`flex items-center justify-center h-1/5`}>
-                <LinearGradient style={tw`rounded-full w-full shadow-lg`} colors={['#9DCEFF', '#8658E8']} locations={[0.7, 0]} start={{ x: 0.2, y: 0.5 }} end={{ x: 1, y: 0.5 }}>
-                    <Button mode="text" style={tw`w-full shadow-lg `} textColor='white'>Go To Home</Button>
-                </LinearGradient>
+                <GradientButton
+                    onPress={() => { }}
+                    buttonLength={tw`w-full`}
+                    buttonStyle={tw`rounded-full w-full shadow-lg p-4`}
+                    textStyle={tw`text-white font-bold`}
+                    colors={['#8658E8', '#9DCEFF']}
+                    locations={[0.5, 1]}
+                    start={{ x: 0, y: 0.5 }}
+                    end={{ x: 0.8, y: 0.5 }}>
+                    Go To Home
+                </GradientButton>
             </View>
             <StatusBar style="auto" />
         </View >
