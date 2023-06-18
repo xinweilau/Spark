@@ -9,8 +9,7 @@ import useAuth from '../utils/useAuth';
 const login = require('../../assets/images/login.svg');
 
 export default function Login() {
-    const { isUserAuthenticated, logInUser } = useAuth();
-    console.log(isUserAuthenticated)
+    const { logInUser } = useAuth();
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
 
