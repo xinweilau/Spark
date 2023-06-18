@@ -5,6 +5,7 @@ import { useState } from "react"
 import { Text, View } from "react-native"
 import { Button, IconButton, TextInput } from "react-native-paper"
 import tw from "twrnc"
+import GradientButton from "../components/GradientButton"
 
 const signup = require("../../assets/images/signup.svg")
 
@@ -58,11 +59,17 @@ export default function SignUp() {
                         }
                     />
 
-                    <LinearGradient style={tw`rounded-tl-lg rounded-tr-lg rounded-bl-lg w-7/8 shadow-lg p-4`} colors={['#8658E8', '#4718AD']} locations={[0, 1]} start={{ x: 0.0, y: 1 }} end={{ x: 1, y: 0 }}>
-                        <Button style={tw`w-full`} textColor='white' onPress={handleSignUp}>
-                            PROCEED
-                        </Button>
-                    </LinearGradient>
+                    <GradientButton
+                        onPress={handleSignUp}
+                        buttonLength={tw`w-7/8`}
+                        buttonStyle={tw`rounded-tl-lg rounded-tr-lg rounded-bl-lg w-full shadow-lg p-7`}
+                        textStyle={tw`text-white font-bold`}
+                        colors={['#8658E8', '#4718AD']}
+                        locations={[0, 1]}
+                        start={{ x: 0.0, y: 1 }}
+                        end={{ x: 1, y: 0 }}>
+                        PROCEED
+                    </GradientButton>
                 </View>
 
                 <View style={tw`flex flex-col items-center gap-4`}>
