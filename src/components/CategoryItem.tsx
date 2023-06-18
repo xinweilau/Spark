@@ -6,7 +6,7 @@ import { ActivityCategory } from "../types/Activity";
 export default function CategoryItem(props: ActivityCategory) {
     const getImage = (category: string) => {
         const imgName = category.toLowerCase();
-        return require(`../../assets/images/${imgName}.svg`)
+        return require(`../../assets/images/sports.svg`)
     }
 
     return (
