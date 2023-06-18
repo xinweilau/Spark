@@ -4,14 +4,23 @@ import { View, Text } from 'react-native';
 import { Button, IconButton, TextInput } from 'react-native-paper';
 import tw from 'twrnc';
 import { LinearGradient } from 'expo-linear-gradient';
+import useAuth from '../utils/useAuth';
 
 const login = require('../../assets/images/login.svg');
 
 export default function Login() {
+    const { isUserAuthenticated, logInUser } = useAuth();
+    console.log(isUserAuthenticated)
+
     const [isPasswordVisible, setIsPasswordVisible] = useState(true);
 
     const togglePasswordVisibility = () => {
         setIsPasswordVisible(!isPasswordVisible);
+    }
+
+    // TODO: this will be replaced with the actual login function
+    const handleLogin = () => {
+        logInUser();
     }
 
     return (
@@ -52,7 +61,7 @@ export default function Login() {
                         Need Help?
                     </Button>
                     <LinearGradient style={tw`rounded-tl-lg rounded-tr-lg rounded-bl-lg w-7/8 shadow-lg p-4`} colors={['#8658E8', '#4718AD']} locations={[0, 1]} start={{ x: 0.0, y: 1 }} end={{ x: 1, y: 0 }}>
-                        <Button style={tw`w-full`} textColor='white'>
+                        <Button style={tw`w-full`} textColor='white' onPress={handleLogin}>
                             PROCEED
                         </Button>
                     </LinearGradient>
