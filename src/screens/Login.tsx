@@ -5,6 +5,7 @@ import { Button, IconButton, TextInput } from 'react-native-paper';
 import tw from 'twrnc';
 import { LinearGradient } from 'expo-linear-gradient';
 import useAuth from '../utils/useAuth';
+import { Link } from '@react-navigation/native';
 
 const login = require('../../assets/images/login.svg');
 
@@ -52,13 +53,12 @@ export default function Login() {
                                 <TextInput.Icon icon="eye-off" onPress={togglePasswordVisibility} />
                         }
                     />
-                    <Button
-                        textColor="#796C94"
-                        rippleColor="transparent"
-                        style={tw`ml-auto`}
+                    <Link
+                        to="/login"
+                        style={tw`ml-auto text-[#796C94]`}
                         onPress={() => console.log("Help Pressed")}>
                         Need Help?
-                    </Button>
+                    </Link>
                     <LinearGradient style={tw`rounded-tl-lg rounded-tr-lg rounded-bl-lg w-7/8 shadow-lg p-4`} colors={['#8658E8', '#4718AD']} locations={[0, 1]} start={{ x: 0.0, y: 1 }} end={{ x: 1, y: 0 }}>
                         <Button style={tw`w-full`} textColor='white' onPress={handleLogin}>
                             PROCEED
@@ -93,9 +93,9 @@ export default function Login() {
                 <View>
                     <Text style={tw`text-[#796C94]`} >
                         Don't have an account?{'\u00A0'}
-                        <Text style={tw`text-[#4718AD] font-bold`}>
+                        <Link to="/login" style={tw`text-[#4718AD] font-bold`}>
                             Sign Up
-                        </Text>
+                        </Link>
                     </Text>
                 </View>
             </View>
