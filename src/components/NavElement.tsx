@@ -4,7 +4,7 @@ import tw from 'twrnc'
 
 export default function NavElement({ state, descriptors, navigation }: any) {
     return (
-        <View style={tw`absolute flex flex-row rounded-[40px] p-2 bottom-15 left-5 right-5 bg-white z-50 shadow-lg`}>
+        <View style={tw`absolute flex flex-row rounded-[40px] p-2 bottom-5 left-5 right-5 bg-white z-50 shadow-lg`}>
             {
                 state.routes.map((route: any, index: any) => {
                     const { options } = descriptors[route.key];
