@@ -77,7 +77,7 @@ export default function Home() {
             <ScrollView style={tw`h-full w-full bg-white px-8 pt-8 pb-24`}>
                 <View style={tw`flex flex-col gap-6 `}>
                     <View>
-                        <View style={tw`flex flex-row flex-nowarp items-center justify-between pt-4`}>
+                        <View style={tw`flex flex-row flex-nowrap items-center justify-between pt-4`}>
                             <Text style={tw`text-2xl font-bold`}>Home</Text>
                             <IconButton
                                 icon="information-outline"
@@ -132,7 +132,7 @@ export default function Home() {
                     onDismiss={togglePointsDialog}
                     style={tw`bg-white`}>
                     <Dialog.Content>
-                        <View style={tw`flex flex-col gap-4 space-between items-center`}>
+                        <View style={tw`flex flex-col gap-4 items-center`}>
 
                             <Text style={tw`font-semibold text-lg`}>Points Information</Text>
                             <View style={tw`text-xs`}>
