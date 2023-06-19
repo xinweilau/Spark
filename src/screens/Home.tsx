@@ -48,6 +48,10 @@ const FAKE_CATEGORIES_DATA: ActivityCategory[] = [
     {
         id: '1',
         name: 'Sports',
+    },
+    {
+        id: '2',
+        name: 'Volunteer',
     }
 ]
 
