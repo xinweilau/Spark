@@ -1,7 +1,7 @@
 import SuccessRegistration from '../screens/SuccessRegistration';
-import Home from '../screens/Home';
 import Navbar from '../components/NavElement';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeStack from './HomeStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -10,7 +10,7 @@ export default function AuthSection() {
         <Tab.Navigator
             tabBar={(props) => <Navbar {...props} />}
             screenOptions={{ tabBarLabelPosition: 'beside-icon', headerShown: false }}>
-            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Home" component={HomeStack} />
             <Tab.Screen name="Leaderboard" component={SuccessRegistration} />
             <Tab.Screen name="Calendar" component={SuccessRegistration} />
             <Tab.Screen name="Settings" component={SuccessRegistration} />
