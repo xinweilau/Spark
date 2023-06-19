@@ -24,7 +24,7 @@ export default function ActivityItem(props: Activity) {
     }
 
     const handlePress = () => {
-        navigation.navigate('EventDescription', {
+        navigation.navigate('EventDetail', {
             id: props.id,
             title: props.title,
         })

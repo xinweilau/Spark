@@ -4,8 +4,8 @@ import { View } from "react-native";
 import tw from "twrnc"
 
 export default function EventDescription() {
-    const navigation = useNavigation<EventDescriptionScreenProps>();
-    const route = useRoute<RouteProp<EventDescriptionScreenProps>>();
+    const navigation = useNavigation<EventDetailScreenProps>();
+    const route = useRoute<RouteProp<EventDetailScreenProps>>();
     const { id, title } = route.params as EventDescriptionParams;
 
     useLayoutEffect(() => {
