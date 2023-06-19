@@ -1,28 +1,33 @@
 import { Text, View } from "react-native"
-import { Ionicons } from '@expo/vector-icons';
 import tw from "twrnc"
 import { Metric } from "../types/Metric";
+import { IconButton } from "react-native-paper";
 
 export default function MetricItem(props: Metric) {
     const getIconType = (metricType: string) => {
         switch (metricType) {
             case 'time':
-                return 'alarm-outline'
+                return 'alarm'
             case 'fitness':
-                return 'barbell-outline'
+                return 'dumbbell'
+            default:
+                return 'help'
         }
     }
 
     return (
-        <View style={tw`flex flex-col gap-8 rounded-3xl bg-white w-36 p-5 justify-between shadow-md`}>
-            <Text>
-                <Ionicons
-                    name={getIconType(props.type)}
-                    size={18}
-                    color='#0070F0'
-                    style={tw`rounded-full bg-[#F2F8FF] p-2`} />
-            </Text>
-            <View>
+        /** Slight offset of m-1 in order for the effects of shadow to be seen */
+        <View style={tw`flex flex-col gap-8 rounded-3xl bg-white w-36 p-2 justify-between shadow-md m-1`}>
+            <IconButton
+                icon={getIconType(props.type)}
+                mode="contained-tonal"
+                size={18}
+                iconColor='#0070F0'
+                rippleColor="transparent"
+                containerColor="#F2F8FF" />
+
+            { /** CSS trick: aggregated padding */}
+            <View style={tw`pl-2 pb-2`}>
                 <Text style={tw`font-semibold`}>
                     {props.value}
                 </Text>
@@ -30,6 +35,6 @@ export default function MetricItem(props: Metric) {
                     {props.title}
                 </Text>
             </View>
-        </View>
+        </View >
     )
 }
