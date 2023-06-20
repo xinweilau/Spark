@@ -54,6 +54,7 @@ export default function NavElement({ state, descriptors, navigation }: any) {
 
                     return (
                         <TouchableOpacity
+                            activeOpacity={1}
                             accessibilityRole="button"
                             accessibilityState={isFocused ? { selected: true } : {}}
                             accessibilityLabel={options.tabBarAccessibilityLabel}
@@ -75,7 +76,6 @@ export default function NavElement({ state, descriptors, navigation }: any) {
                                     }
                                 </View>
                             </View>
-
                         </TouchableOpacity>
                     );
                 })
