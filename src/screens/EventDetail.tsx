@@ -4,19 +4,20 @@ import { useLayoutEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import tw from "twrnc"
 import EventDetailBar from "../navigation/EventDetailBar";
+import { Activity } from "../types/Activity";
 
 const basketball = require('../../assets/images/basketball.svg');
 
 export default function EventDetail() {
     const navigation = useNavigation<EventDetailScreenProps>();
     const route = useRoute<RouteProp<EventDetailScreenProps>>();
-    const { id, title } = route.params as EventDescriptionParams;
+    const activity = route.params as Activity;
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            title: title,
+            title: activity.title,
         });
-    }, [navigation, title]);
+    }, [navigation, activity]);
 
     return (
         <View style={tw`flex flex-col w-full h-full bg-white`}>
@@ -27,20 +28,19 @@ export default function EventDetail() {
                     contentFit="cover" />
             </View>
             <View style={tw`flex flex-col h-4/7 p-4 pb-24`}>
-                <Text style={tw`text-lg font-semibold text-[#464646]`}>Basketball</Text>
-                <EventDetailBar />
+                <Text style={tw`text-lg font-semibold text-[#464646]`}>
+                    {activity.title}
+                </Text>
+                <EventDetailBar activity={activity} />
             </View>
         </View>
     )
 }
 
-interface EventDescriptionParams {
-    id: number;
-    title: string;
-}
-
-export function EventDescription() {
+export function EventDescription({ description }: Activity) {
     const [showAllLines, setShowAllLines] = useState<boolean>(false);
+
+    const numLines = 4;
 
     const toggleShowAllLines = () => {
         setShowAllLines(!showAllLines);
@@ -50,59 +50,77 @@ export function EventDescription() {
         <View style={tw`flex w-full h-full bg-white gap-2`}>
             <Text
                 style={tw`text-[#8A8A9D] leading-5`}
-                numberOfLines={!showAllLines && 4 || undefined}>
-                Viverra sollicitudin auctor eget nascetur quis velit id blandit,
-                sodales nostra quam habitasse risus gravida fermentum elementum,
-                sapien massa lorem placerat dis rhoncus ornare.
-
-                Viverra sollicitudin auctor eget nascetur quis velit id blandit,
-                sodales nostra quam habitasse risus gravida fermentum elementum,
-                sapien massa lorem placerat dis rhoncus ornare.
-
-                Viverra sollicitudin auctor eget nascetur quis velit id blandit,
-                sodales nostra quam habitasse risus gravida fermentum elementum,
-                sapien massa lorem placerat dis rhoncus ornare.
+                numberOfLines={!showAllLines && numLines || undefined}>
+                {description}
             </Text>
-            <TouchableOpacity
-                activeOpacity={1}
-                accessibilityRole="button"
-                accessibilityLabel={showAllLines && "Show less" || "Show more"}
-                onPress={toggleShowAllLines}>
-                <Text style={tw`text-[#3A63E0] font-semibold`}>
-                    {showAllLines && "Show less" || "Show more"}
-                </Text>
-            </TouchableOpacity>
+            {
+                /** 
+                 * Personally, I don't like the fact that it is always displayed but react-native's onTextLayout event is broken
+                 * so there's nothing much we can do on this end. Can perhaps do some magic based on number of words though.
+                 */
+                <TouchableOpacity
+                    activeOpacity={1}
+                    accessibilityRole="button"
+                    accessibilityLabel={showAllLines && "Show less" || "Show more"}
+                    onPress={toggleShowAllLines}>
+                    <Text style={tw`text-[#3A63E0] font-semibold`}>
+                        {showAllLines && "Show less" || "Show more"}
+                    </Text>
+                </TouchableOpacity>
+            }
         </View>
 
     )
 }
 
-export function EventMeta() {
+export function EventMeta(props: Activity) {
+    const formatDate = (date: Date) => {
+        const formattedDate = date.toLocaleString('en-US', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        });
+
+        return formattedDate
+    }
+
+    const formatTime = (date: Date) => {
+        const formattedTime = date.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+        });
+
+        return formattedTime
+    }
+
     return (
         <View style={tw`flex w-full h-full bg-white gap-4`}>
             <View style={tw`flex flex-row`}>
                 <Text style={tw`font-semibold text-[#62626F]`}>Location: </Text>
-                <Text style={tw`text-[#8A8A9D]`}>Pioneer Community Center</Text>
+                <Text style={tw`text-[#8A8A9D]`}>{props.location}</Text>
             </View>
 
             <View style={tw`flex flex-row`}>
                 <Text style={tw`font-semibold text-[#62626F]`}>Date: </Text>
-                <Text style={tw`text-[#8A8A9D]`}>21 June 2023, Wednesday</Text>
+                <Text style={tw`text-[#8A8A9D]`}>{formatDate(props.dateTime)}</Text>
             </View>
 
             <View style={tw`flex flex-row`}>
                 <Text style={tw`font-semibold text-[#62626F]`}>Time: </Text>
-                <Text style={tw`text-[#8A8A9D]`}>8:45 PM to 9:45 PM</Text>
+                <Text style={tw`text-[#8A8A9D]`}>{formatTime(props.dateTime)}</Text>
             </View>
 
             <View style={tw`flex flex-row`}>
                 <Text style={tw`font-semibold text-[#62626F]`}>Max. participans: </Text>
-                <Text style={tw`text-[#8A8A9D]`}>6</Text>
+                <Text style={tw`text-[#8A8A9D]`}>{props.numParticipants}</Text>
             </View>
 
             <View style={tw`flex flex-row`}>
                 <Text style={tw`font-semibold text-[#62626F]`}>Current headcount: </Text>
-                <Text style={tw`text-[#8A8A9D]`}>1/6</Text>
+                <Text style={tw`text-[#8A8A9D]`}>
+                    {`${props.maxParticipants - props.numParticipants}/${props.maxParticipants}`}
+                </Text>
             </View>
         </View >
     )
