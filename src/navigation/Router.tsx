@@ -8,7 +8,7 @@ export default function Router() {
 
     return (
         <NavigationContainer>
-            {isUserAuthenticated ? <AuthSection /> : <AuthSection />}
+            {isUserAuthenticated ? <AuthSection /> : <AppSection />}
         </NavigationContainer>
     )
 }

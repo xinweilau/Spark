@@ -12,3 +12,11 @@ type HomeStackParamList = {
 
 type HomeScreenProps = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 type EventDetailScreenProps = NativeStackScreenProps<HomeStackParamList, 'EventDetail'>;
+
+type EventCategoryStackParamList = {
+    EventCategory: undefined;
+    EventCategoryActivity: undefined;
+};
+
+type EventCategoryScreenProps = NativeStackScreenProps<EventCategoryStackParamList, 'EventCategory'>;
+type EventCategoryListScreenProps = NativeStackScreenProps<EventCategoryStackParamList, 'EventCategoryActivity'>;

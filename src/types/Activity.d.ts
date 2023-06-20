@@ -1,5 +1,5 @@
 /**
- * Represents an instance of a single Activity.
+ * Represents an instance of a single registered Activity.
  * Temporary interface until we formalise the data representation.
  */
 export interface Activity {
