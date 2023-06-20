@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "../screens/Home";
-import EventDescription from "../screens/EventDetail";
+import EventDetail from "../screens/EventDetail";
 
 const HomeStackNav = createNativeStackNavigator<HomeStackParamList>();
 
@@ -15,7 +15,7 @@ export default function HomeStack() {
                 }} />
             <HomeStackNav.Screen
                 name="EventDetail"
-                component={EventDescription}
+                component={EventDetail}
                 options={{
                     headerTitleAlign: 'center',
                     headerShadowVisible: false,
