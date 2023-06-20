@@ -7,6 +7,7 @@
 type HomeStackParamList = {
     Home: undefined;
     EventDetail: undefined;
+    EventCategory: undefined;
 };
 
 type HomeScreenProps = NativeStackScreenProps<HomeStackParamList, 'Home'>;
