@@ -3,6 +3,7 @@ import tw from "twrnc"
 import SubCategoryBar from "../navigation/SubCategoryBar"
 import SubCategoryItem from "../components/SubCategoryItem"
 import { ActivityCategory } from "../types/Activity"
+import { SUBCATEGORY_LIKED, SUBCATEGORY_SPORTS } from "../utils/mock"
 
 export default function SubCategory() {
     return (
@@ -17,24 +18,6 @@ export default function SubCategory() {
     )
 }
 
-const FAKE_SPORTS_CATEGORY = [
-    {
-        id: '1',
-        name: 'Basketball',
-    },
-    {
-        id: '2',
-        name: 'Soccer',
-    }
-]
-
-const FAKE_LIKED_SPORTS_CATEGORY = [
-    {
-        id: '2',
-        name: 'Soccer',
-    }
-]
-
 /**
  * A mutable component that displays a list of activities (based on the category's ID)
  * Optionally takes in a boolean of whether to display only what the user has liked
@@ -45,7 +28,7 @@ export function SubCategoryActivity({ id, liked }: { id: string, liked?: boolean
         <View style={tw`bg-white h-full w-full`}>
             <FlatList
                 horizontal={true}
-                data={liked ? FAKE_LIKED_SPORTS_CATEGORY : FAKE_SPORTS_CATEGORY}
+                data={liked ? SUBCATEGORY_LIKED : SUBCATEGORY_SPORTS}
                 renderItem={({ item }: { item: ActivityCategory }) => <SubCategoryItem {...item} />}
                 keyExtractor={(item) => item.id}
                 ItemSeparatorComponent={() => <View style={tw`w-4`} />}
