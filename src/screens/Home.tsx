@@ -2,81 +2,11 @@ import { FlatList, Text, View, ScrollView } from 'react-native';
 import tw from 'twrnc';
 import { Dialog, IconButton, PaperProvider, Portal } from 'react-native-paper';
 import ActivityItem from '../components/ActivityItem';
-import { Activity, ActivityCategory } from '../types/Activity';
 import CategoryItem from '../components/CategoryItem';
 import MetricItem from '../components/MetricItem';
-import { Metric } from '../types/Metric';
 import GradientButton from '../components/GradientButton';
 import { useState } from 'react';
-
-// TODO: Replace this with real data
-const FAKE_ACTIVITIES_DATA: Activity[] = [
-    {
-        id: '1',
-        title: 'Spin Class',
-        category: {
-            id: '1',
-            name: 'FITNESS',
-        },
-        dateTime: new Date(),
-        location: 'R1OT',
-        description: 'A spin class is a high-intensity cycling workout that generally takes place on a stationary machine with a heavy, weighted flywheel that is linked to the pedals.',
-        numParticipants: 1,
-        maxParticipants: 10,
-    },
-    {
-        id: '2',
-        title: 'Hot Yoga',
-        category: {
-            id: '2',
-            name: 'WELLNESS',
-        },
-        dateTime: new Date(),
-        location: 'Fitness First Clementi',
-        description: 'Hot yoga is a vigorous form of yoga performed in a studio that is heated to 105 F (40 C) and has a humidity of 40 percent. The formal name for hot yoga is Bikram yoga.',
-        numParticipants: 0,
-        maxParticipants: 10,
-    },
-    {
-        id: '3',
-        title: 'IPPT Training',
-        category: {
-            id: '1',
-            name: 'FITNESS',
-        },
-        dateTime: new Date(),
-        location: 'Sungei Gedong Camp',
-        description: 'The Individual Physical Proficiency Test (IPPT) is a standard physical fitness test used by the Singapore Armed Forces (SAF), Singapore Civil Defence Force (SCDF), and Singapore Police Force (SPF) to test the basic components of physical fitness.',
-        numParticipants: 5,
-        maxParticipants: 10,
-    }
-]
-
-// TODO: Replace this with real data
-const FAKE_CATEGORIES_DATA: ActivityCategory[] = [
-    {
-        id: '1',
-        name: 'Sports',
-    },
-    {
-        id: '2',
-        name: 'Volunteer',
-    }
-]
-
-// TODO: Replace this with real data
-const FAKE_OVERVIEW_DATA: Metric[] = [
-    {
-        title: 'Total Time',
-        value: '3hr',
-        type: 'time',
-    },
-    {
-        title: 'Total Activities',
-        value: '3',
-        type: 'fitness',
-    }
-]
+import { ACTIVITY_DATA, CATEGORY_DATA, OVERVIEW_DATA } from '../utils/mock';
 
 export default function Home() {
     const [pointsDialogVisible, setPointsDialogVisible] = useState(false);
@@ -104,7 +34,7 @@ export default function Home() {
                         <Text style={tw`text-base font-medium`}>Top Activities</Text>
                         <FlatList
                             horizontal={true}
-                            data={FAKE_ACTIVITIES_DATA}
+                            data={ACTIVITY_DATA}
                             renderItem={({ item }) => <ActivityItem {...item} />}
                             keyExtractor={(item) => item.id}
                             ItemSeparatorComponent={() => <View style={tw`w-4`} />}
@@ -117,7 +47,7 @@ export default function Home() {
 
                         <FlatList
                             horizontal={true}
-                            data={FAKE_CATEGORIES_DATA}
+                            data={CATEGORY_DATA}
                             renderItem={({ item }) => <CategoryItem {...item} />}
                             keyExtractor={(item) => item.id}
                             ItemSeparatorComponent={() => <View style={tw`w-4`} />}
@@ -130,7 +60,7 @@ export default function Home() {
 
                         <FlatList
                             horizontal={true}
-                            data={FAKE_OVERVIEW_DATA}
+                            data={OVERVIEW_DATA}
                             renderItem={({ item }) => <MetricItem {...item} />}
                             ItemSeparatorComponent={() => <View style={tw`w-4`} />}
                             showsHorizontalScrollIndicator={false}
