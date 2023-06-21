@@ -8,6 +8,7 @@ type HomeStackParamList = {
     Home: undefined;
     EventDetail: undefined;
     SubCategory: undefined;
+    CreateActivity: undefined;
 };
 
 type SettingsStackParamList = {
