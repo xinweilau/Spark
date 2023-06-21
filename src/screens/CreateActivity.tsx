@@ -11,6 +11,8 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Dropdown } from 'react-native-element-dropdown';
 import GradientButton from "../components/GradientButton";
 import { useNavigation } from "@react-navigation/native";
+import { useMutation } from "@tanstack/react-query";
+import { createActivity } from "../services/Activity";
 
 export default function CreateActivity() {
     const navigation = useNavigation<HomeScreenProps>();
@@ -59,6 +61,14 @@ export default function CreateActivity() {
 
         return formattedDate
     }
+
+    const { mutate } = useMutation({
+        mutationKey: ['createActivity'],
+        mutationFn: (data: Activity) => createActivity(data),
+        onSuccess: () => {
+            navigation.goBack();
+        }
+    })
 
     return (
         <ScrollView style={tw`bg-white w-full h-full`}>

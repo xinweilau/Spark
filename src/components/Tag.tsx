@@ -8,7 +8,7 @@ import tw from "twrnc"
 export default function Tag({ children }: TagProps) {
     return (
         <View style={tw`bg-white rounded-full py-1 px-2`}>
-            <Text style={tw`capitalize text-xs text-[#5555CB] `}>
+            <Text style={tw`uppercase text-xs text-[#5555CB] `}>
                 {children}
             </Text>
         </View>

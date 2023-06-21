@@ -7,9 +7,10 @@ export interface Activity {
     title: string;
     description?: string;
     category: ActivityCategory;
-    dateTime: Date;
+    subCategory: ActivityCategory;
+    startTime: Date;
+    endTime: Date;
     location: string;
-    numParticipants: number;
     maxParticipants: number;
 }
 
