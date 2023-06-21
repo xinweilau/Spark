@@ -9,7 +9,6 @@ export default function Router() {
     return (
         <NavigationContainer>
             {isUserAuthenticated ? <AuthSection /> : <AppSection />}
-            {/* <AppSection /> */}
         </NavigationContainer>
     )
 }
