@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "../screens/Home";
 import EventDetail from "../screens/EventDetail";
-import ActivityCategoryStack from "./ActivityCategoryStack";
+import SubCategory from "./SubCategoryStack";
 
 const HomeStackNav = createNativeStackNavigator<HomeStackParamList>();
 
@@ -22,8 +22,8 @@ export default function HomeStack() {
                     headerShadowVisible: false,
                 }} />
             <HomeStackNav.Screen
-                name="EventCategory"
-                component={ActivityCategoryStack}
+                name="SubCategory"
+                component={SubCategory}
                 options={{
                     headerShadowVisible: false,
                     headerTitle: "",

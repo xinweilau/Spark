@@ -6,12 +6,12 @@ import { useNavigation } from "@react-navigation/native"
 
 const basketball = require("../../assets/images/basketball.svg")
 
-export default function ActivityCategoryCard(props: ActivityCategory) {
+export default function SubCategoryItem(props: ActivityCategory) {
     /** The useNavigation hook is not type safe so we should be careful here */
     const navigation = useNavigation<EventCategoryScreenProps>();
 
     const handlePress = () => {
-        navigation.navigate('EventCategoryActivity', props)
+        navigation.navigate('SubCategoryActivity', props)
     }
 
     return (

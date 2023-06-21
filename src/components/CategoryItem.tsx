@@ -15,7 +15,7 @@ export default function CategoryItem(props: ActivityCategory) {
     }
 
     const handlePress = () => {
-        navigation.navigate('EventCategory', props)
+        navigation.navigate('SubCategory', props)
     }
 
     return (
