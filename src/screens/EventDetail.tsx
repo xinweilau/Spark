@@ -2,9 +2,13 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { useLayoutEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import tw from "twrnc"
 import EventDetailBar from "../navigation/EventDetailBar";
 import { Activity } from "../types/Activity";
+import { Button, Dialog, Portal } from "react-native-paper";
+import { Ionicons } from '@expo/vector-icons';
+import tw from "twrnc"
+import { formatDate, formatTime } from "../utils/dateTime";
+
 
 const basketball = require('../../assets/images/basketball.svg');
 
@@ -12,6 +16,13 @@ export default function EventDetail() {
     const navigation = useNavigation<EventDetailScreenProps>();
     const route = useRoute<RouteProp<EventDetailScreenProps>>();
     const activity = route.params as Activity;
+
+    const [userJoinedEvent, setUserJoinedEvent] = useState<boolean>(false);
+    const [isConfirmDialogVisible, setIsConfirmDialogVisible] = useState<boolean>(false);
+
+    const toggleConfirmDialogVisible = () => {
+        setIsConfirmDialogVisible(!isConfirmDialogVisible);
+    }
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -28,11 +39,35 @@ export default function EventDetail() {
                     contentFit="cover" />
             </View>
             <View style={tw`flex flex-col h-4/7 p-4 pb-24`}>
-                <Text style={tw`text-lg font-semibold text-[#464646]`}>
-                    {activity.title}
-                </Text>
+
+                <View style={tw`flex flex-row flex-nowrap justify-between`}>
+                    <Text style={tw`text-lg font-semibold text-[#464646]`}>
+                        {activity.title}
+                    </Text>
+                    <Button mode="contained" buttonColor="#303437" onPress={toggleConfirmDialogVisible}>
+                        {userJoinedEvent ? "Join" : "Leave"}
+                    </Button>
+                </View>
                 <EventDetailBar activity={activity} />
             </View>
+
+
+            <Portal>
+                <Dialog visible={isConfirmDialogVisible} onDismiss={toggleConfirmDialogVisible}>
+                    <Dialog.Title>{activity.title}</Dialog.Title>
+                    <Dialog.Content>
+                        <View style={tw`flex flex-col gap-2`}>
+                            <Text style={tw`font-semibold`}>
+                                {activity.category.name}
+                            </Text>
+                            <Text>
+                                <Ionicons name="time-outline" size={24} color="#7B6F72" />
+
+                            </Text>
+                        </View>
+                    </Dialog.Content>
+                </Dialog>
+            </Portal>
         </View>
     )
 }
@@ -74,26 +109,6 @@ export function EventDescription({ description }: Activity) {
 }
 
 export function EventMeta(props: Activity) {
-    const formatDate = (date: Date) => {
-        const formattedDate = date.toLocaleString('en-US', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-        });
-
-        return formattedDate
-    }
-
-    const formatTime = (date: Date) => {
-        const formattedTime = date.toLocaleString('en-US', {
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true,
-        });
-
-        return formattedTime
-    }
-
     return (
         <View style={tw`flex w-full h-full bg-white gap-4`}>
             <View style={tw`flex flex-row`}>
