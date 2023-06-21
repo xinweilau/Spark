@@ -1,6 +1,6 @@
 import { FlatList, Text, View, ScrollView } from 'react-native';
 import tw from 'twrnc';
-import { Dialog, IconButton, PaperProvider, Portal } from 'react-native-paper';
+import { Button, Dialog, IconButton, PaperProvider, Portal } from 'react-native-paper';
 import ActivityItem from '../components/ActivityItem';
 import CategoryItem from '../components/CategoryItem';
 import MetricItem from '../components/MetricItem';
@@ -17,8 +17,8 @@ export default function Home() {
 
     return (
         <PaperProvider>
-            <ScrollView style={tw`h-full w-full bg-white px-8 pt-8 pb-24`}>
-                <View style={tw`flex flex-col gap-6 `}>
+            <ScrollView style={tw`h-full w-full bg-white px-8 pb-24`}>
+                <View style={tw`flex flex-col gap-4`}>
                     <View>
                         <View style={tw`flex flex-row flex-nowrap items-center justify-between pt-4`}>
                             <Text style={tw`text-2xl font-bold`}>Home</Text>
@@ -29,6 +29,16 @@ export default function Home() {
                                 onPress={togglePointsDialog} />
                         </View>
                     </View>
+
+                    <Button
+                        icon="plus"
+                        mode="contained"
+                        onPress={() => { }}
+                        buttonColor="#F0F0FF"
+                        textColor='black'
+                        style={tw`rounded-xl max-w-3/4`}>
+                        Create Activity
+                    </Button>
 
                     <View style={tw`flex flex-col gap-4 justify-center`}>
                         <Text style={tw`text-base font-medium`}>Top Activities</Text>
@@ -43,6 +53,17 @@ export default function Home() {
                     </View>
 
                     <View style={tw`flex flex-col gap-4 justify-center`}>
+                        <Text style={tw`text-base font-medium`}>Overview</Text>
+                        <FlatList
+                            horizontal={true}
+                            data={OVERVIEW_DATA}
+                            renderItem={({ item }) => <MetricItem {...item} />}
+                            ItemSeparatorComponent={() => <View style={tw`w-4`} />}
+                            showsHorizontalScrollIndicator={false}
+                        />
+                    </View>
+
+                    <View style={tw`flex flex-col gap-4 justify-center`}>
                         <Text style={tw`text-base font-medium`}>Categories</Text>
 
                         <FlatList
@@ -50,18 +71,6 @@ export default function Home() {
                             data={CATEGORY_DATA}
                             renderItem={({ item }) => <CategoryItem {...item} />}
                             keyExtractor={(item) => item.id}
-                            ItemSeparatorComponent={() => <View style={tw`w-4`} />}
-                            showsHorizontalScrollIndicator={false}
-                        />
-                    </View>
-
-                    <View style={tw`flex flex-col gap-4 justify-center`}>
-                        <Text style={tw`text-base font-medium`}>Overview</Text>
-
-                        <FlatList
-                            horizontal={true}
-                            data={OVERVIEW_DATA}
-                            renderItem={({ item }) => <MetricItem {...item} />}
                             ItemSeparatorComponent={() => <View style={tw`w-4`} />}
                             showsHorizontalScrollIndicator={false}
                         />
