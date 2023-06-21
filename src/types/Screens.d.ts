@@ -7,7 +7,16 @@
 type HomeStackParamList = {
     Home: undefined;
     EventDetail: undefined;
+    SubCategory: undefined;
 };
 
 type HomeScreenProps = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 type EventDetailScreenProps = NativeStackScreenProps<HomeStackParamList, 'EventDetail'>;
+
+type SubCategoryStackParamList = {
+    SubCategory: undefined;
+    SubCategoryActivity: undefined;
+};
+
+type EventCategoryScreenProps = NativeStackScreenProps<SubCategoryStackParamList, 'SubCategory'>;
+type EventCategoryListScreenProps = NativeStackScreenProps<SubCategoryStackParamList, 'SubCategoryActivity'>;
