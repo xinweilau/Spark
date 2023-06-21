@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import EventCategoryTabBar from "../components/EventCategoryTabBar";
-import { SubCategoryActivity } from "../screens/SubCategory";
+import { SubCategoryList } from "../screens/SubCategory";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -15,10 +15,10 @@ export default function SubCategoryBar(props: { id: string }) {
         >
             <Tab.Screen
                 name="All"
-                children={() => <SubCategoryActivity {...props} />} />
+                children={() => <SubCategoryList {...props} />} />
             <Tab.Screen
                 name="Liked"
-                children={() => <SubCategoryActivity {...props} liked />} />
+                children={() => <SubCategoryList {...props} liked />} />
         </Tab.Navigator>
     )
 }
