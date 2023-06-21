@@ -18,6 +18,7 @@ export default function SettingsStack() {
                 name="EditProfile"
                 component={EditProfile}
                 options={{
+                    headerTitle: "Edit Profile",
                     headerTitleAlign: 'center',
                     headerShadowVisible: false,
                 }} />
@@ -26,7 +27,8 @@ export default function SettingsStack() {
                 component={Rewards}
                 options={{
                     headerShadowVisible: false,
-                    headerTitle: "",
+                    headerTitleAlign: 'center',
+                    headerTitle: "Rewards Center",
                 }} />
         </SettingsStackNav.Navigator>
     )
