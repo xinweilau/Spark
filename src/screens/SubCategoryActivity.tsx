@@ -1,4 +1,4 @@
-import { FlatList, ScrollView, Text, View } from "react-native";
+import { FlatList, ScrollView, View } from "react-native";
 import tw from "twrnc"
 import ActivityItem from "../components/ActivityItem";
 import { ACTIVITY_DATA } from "../utils/mock";
@@ -6,7 +6,7 @@ import { ACTIVITY_DATA } from "../utils/mock";
 /**
  * This component needs to be modified with an ID which will be used to fetch the activities under it
  */
-export default function EventCategoryActivity() {
+export default function SubCategoryActivity() {
     return (
         <ScrollView style={tw`w-full h-full px-8 pb-24 bg-white`}>
             <FlatList

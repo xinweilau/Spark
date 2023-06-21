@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SubCategory from "../screens/SubCategory";
-import EventCategoryActivity from "../screens/EventCategoryActivity";
+import SubCategoryActivity from "../screens/SubCategoryActivity";
 
 const SubCategoryStackNav = createNativeStackNavigator<SubCategoryStackParamList>();
 
@@ -17,7 +17,7 @@ export default function SubCategoryStack() {
 
             <SubCategoryStackNav.Screen
                 name="SubCategoryActivity"
-                component={EventCategoryActivity}
+                component={SubCategoryActivity}
                 options={{
                     headerShown: false,
                     headerTitle: "",

@@ -22,7 +22,7 @@ export default function SubCategory() {
  * A mutable component that displays a list of activities (based on the category's ID)
  * Optionally takes in a boolean of whether to display only what the user has liked
  */
-export function SubCategoryActivity({ id, liked }: { id: string, liked?: boolean }) {
+export function SubCategoryList({ id, liked }: { id: string, liked?: boolean }) {
     // Currently, ID is not used. Future implementation will use ID to fetch data from the backend.
     return (
         <View style={tw`bg-white h-full w-full`}>
