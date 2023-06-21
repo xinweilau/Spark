@@ -4,11 +4,24 @@ import Tag from "./Tag";
 import { Ionicons } from '@expo/vector-icons';
 import { Activity } from "../types/Activity";
 import { useNavigation } from "@react-navigation/native";
-import { formatDate } from "../utils/dateTime";
 
 export default function ActivityItem(props: Activity) {
     /** The useNavigation hook is not type safe so we should be careful here */
     const navigation = useNavigation<HomeScreenProps>();
+
+    const formatDate = (date: Date) => {
+        const formattedDate = date.toLocaleString('en-US', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            weekday: 'long',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+        });
+
+        return formattedDate
+    }
 
     const handlePress = () => {
         navigation.navigate('EventDetail', props)

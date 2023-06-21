@@ -4,11 +4,11 @@ import { useLayoutEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import EventDetailBar from "../navigation/EventDetailBar";
 import { Activity } from "../types/Activity";
-import { Button, Dialog, Portal } from "react-native-paper";
+import { Button, Dialog, PaperProvider, Portal } from "react-native-paper";
 import { Ionicons } from '@expo/vector-icons';
 import tw from "twrnc"
 import { formatDate, formatTime } from "../utils/dateTime";
-
+import GradientButton from "../components/GradientButton";
 
 const basketball = require('../../assets/images/basketball.svg');
 
@@ -19,9 +19,20 @@ export default function EventDetail() {
 
     const [userJoinedEvent, setUserJoinedEvent] = useState<boolean>(false);
     const [isConfirmDialogVisible, setIsConfirmDialogVisible] = useState<boolean>(false);
+    const [isUserJoining, setIsUserJoining] = useState<boolean>(false);
 
     const toggleConfirmDialogVisible = () => {
         setIsConfirmDialogVisible(!isConfirmDialogVisible);
+    }
+
+    const handleUserJoinEvent = () => {
+        setIsUserJoining(true);
+        setIsConfirmDialogVisible(false);
+
+        setTimeout(() => {
+            setIsUserJoining(false);
+            setUserJoinedEvent(!userJoinedEvent);
+        }, 5000);
     }
 
     useLayoutEffect(() => {
@@ -31,44 +42,69 @@ export default function EventDetail() {
     }, [navigation, activity]);
 
     return (
-        <View style={tw`flex flex-col w-full h-full bg-white`}>
-            <View style={tw`w-full flex-1`}>
-                <Image
-                    source={basketball}
-                    style={tw`w-full h-full rounded-bl-3xl rounded-br-3xl`}
-                    contentFit="cover" />
-            </View>
-            <View style={tw`flex flex-col h-4/7 p-4 pb-24`}>
 
-                <View style={tw`flex flex-row flex-nowrap justify-between`}>
-                    <Text style={tw`text-lg font-semibold text-[#464646]`}>
-                        {activity.title}
-                    </Text>
-                    <Button mode="contained" buttonColor="#303437" onPress={toggleConfirmDialogVisible}>
-                        {userJoinedEvent ? "Join" : "Leave"}
-                    </Button>
+        <PaperProvider>
+            <View style={tw`flex flex-col w-full h-full bg-white`}>
+                <View style={tw`w-full flex-1`}>
+                    <Image
+                        source={basketball}
+                        style={tw`w-full h-full rounded-bl-3xl rounded-br-3xl`}
+                        contentFit="cover" />
                 </View>
-                <EventDetailBar activity={activity} />
+                <View style={tw`flex flex-col h-4/7 p-4 pb-24`}>
+                    <View style={tw`flex flex-row flex-nowrap justify-between items-center`}>
+                        <Text style={tw`text-lg font-semibold text-[#464646]`}>
+                            {activity.title}
+                        </Text>
+                        <Button
+                            mode="contained"
+                            buttonColor="#303437"
+                            onPress={toggleConfirmDialogVisible}
+                            loading={isUserJoining}
+                            disabled={isUserJoining}>
+                            {!userJoinedEvent ? "Join" : "Leave"}
+                        </Button>
+                    </View>
+                    <EventDetailBar activity={activity} />
+                </View>
             </View>
-
-
             <Portal>
-                <Dialog visible={isConfirmDialogVisible} onDismiss={toggleConfirmDialogVisible}>
+                <Dialog
+                    visible={isConfirmDialogVisible}
+                    onDismiss={toggleConfirmDialogVisible}
+                    style={tw`bg-white`}>
                     <Dialog.Title>{activity.title}</Dialog.Title>
                     <Dialog.Content>
-                        <View style={tw`flex flex-col gap-2`}>
-                            <Text style={tw`font-semibold`}>
-                                {activity.category.name}
-                            </Text>
-                            <Text>
-                                <Ionicons name="time-outline" size={24} color="#7B6F72" />
+                        <View style={tw`flex flex-col gap-4`}>
+                            <View>
+                                <Text style={tw`font-semibold`}>
+                                    {activity.category.name}
+                                </Text>
 
-                            </Text>
+                                <View style={tw`flex flex-row gap-1 items-center`}>
+                                    <Ionicons name="time-outline" size={16} color="#7B6F72" />
+                                    <Text style={tw`font-light`}>
+                                        {`${formatDate(activity.dateTime)} | ${formatTime(activity.dateTime)}`}
+                                    </Text>
+                                </View>
+                            </View>
+
+                            <GradientButton
+                                onPress={handleUserJoinEvent}
+                                buttonLength={tw`w-full`}
+                                buttonStyle={tw`rounded-full w-full shadow-lg p-4`}
+                                textStyle={tw`font-bold`}
+                                colors={['#9DCEFF', '#92A3FD']}
+                                locations={[0.5, 1]}
+                                start={{ x: 0, y: 0.5 }}
+                                end={{ x: 0.5, y: 0 }}>
+                                CONFIRM
+                            </GradientButton>
                         </View>
                     </Dialog.Content>
                 </Dialog>
             </Portal>
-        </View>
+        </PaperProvider>
     )
 }
 
