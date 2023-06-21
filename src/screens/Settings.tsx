@@ -9,20 +9,19 @@ import {
   TouchableOpacity,
   Switch,
 } from 'react-native';
+import tw from 'twrnc';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 const avatar = require('../../assets/images/login.svg');
 const SECTIONS = [
   {
-    header: 'Preferences',
+    header: 'Account',
     icon: 'settings',
     items: [
-      { label: 'Language', value: 'English', type: 'input' },
-      { label: 'Dark Mode', value: false, type: 'boolean' },
-      { label: 'Use Wi-Fi', value: true, type: 'boolean' },
-      { label: 'Location', value: 'Los Angeles, CA', type: 'input' },
-      { label: 'Show collaborators', value: true, type: 'boolean' },
-      { label: 'Accessibility mode', value: false, type: 'boolean' },
+      { label: 'Password', value: false, type: 'input' },
+      { label: 'Notifications', false: 'English', type: 'input' },
+      { label: 'Customer Support', value: false, type: 'input' },
+    
     ],
   },
 ];
@@ -42,13 +41,19 @@ export default function Settings() {
     return (
       <SafeAreaView style={{ backgroundColor: '#f8f8f8', flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.header}>
+        {/* <View style={styles.header}>
           <Text style={styles.title}>Settings</Text>
 
           <Text style={styles.subtitle}>
-            Lorem ipsum dolor sit amet consectetur.
+            
           </Text>
-        </View>
+        </View> */}
+        <View>
+                        <View style={tw`flex flex-row flex-nowrap items-center justify-between pt-4`}>
+                            <Text style={tw`text-2xl font-bold pb-6 px-6`}>Settings</Text>
+                          
+                        </View>
+                    </View>
 
         <View style={styles.profile}>
           <View style={styles.profileHeader}>
@@ -59,12 +64,11 @@ export default function Settings() {
               }}
               style={styles.profileAvatar}
             />
-
-            <View style={styles.profile}>
-              <Text style={styles.profileName}>John Doe</Text>
-              <Text style={styles.profileHandle}>@john.doe</Text>
-            </View>
           </View>
+          
+          <View style={styles.profileBody}>
+              <Text style={styles.profileName}>John Doe</Text>
+            </View>
 
           <TouchableOpacity
             onPress={() => {
@@ -181,11 +185,20 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: '#e3e3e3',
+    alignItems: 'center'
   },
   profileHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+  },
+  profileBody:{
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#3d3d3d',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   profileAvatar: {
     width: 60,
@@ -199,12 +212,10 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '600',
     color: '#3d3d3d',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  profileHandle: {
-    marginTop: 4,
-    fontSize: 15,
-    color: '#989898',
-  },
+  
   profileAction: {
     marginTop: 16,
     paddingVertical: 10,
