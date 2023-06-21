@@ -1,4 +1,4 @@
-import { FlatList, Text, View, ScrollView } from 'react-native';
+import { FlatList, Text, View, ScrollView, SafeAreaView } from 'react-native';
 import tw from 'twrnc';
 import { Button, Dialog, IconButton, PaperProvider, Portal } from 'react-native-paper';
 import ActivityItem from '../components/ActivityItem';
@@ -21,8 +21,8 @@ export default function Home() {
 
     return (
         <PaperProvider>
-            <ScrollView style={tw`h-full w-full bg-white px-8 pb-24`}>
-                <View style={tw`flex flex-col gap-4`}>
+            <ScrollView style={tw`h-full w-full bg-white px-8 pt-8`}>
+                <View style={tw`flex flex-col gap-4 pb-30`}>
                     <View>
                         <View style={tw`flex flex-row flex-nowrap items-center justify-between pt-4`}>
                             <Text style={tw`text-2xl font-bold`}>Home</Text>
@@ -40,7 +40,7 @@ export default function Home() {
                         onPress={() => navigation.navigate('CreateActivity')}
                         buttonColor="#F0F0FF"
                         textColor='black'
-                        style={tw`rounded-xl max-w-3/4`}>
+                        style={tw`rounded-xl`}>
                         Create Activity
                     </Button>
 
@@ -50,7 +50,6 @@ export default function Home() {
                             horizontal={true}
                             data={ACTIVITY_DATA}
                             renderItem={({ item }) => <ActivityItem {...item} />}
-                            keyExtractor={(item) => item.id}
                             ItemSeparatorComponent={() => <View style={tw`w-4`} />}
                             showsHorizontalScrollIndicator={false}
                         />
