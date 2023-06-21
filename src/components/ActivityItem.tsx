@@ -33,7 +33,7 @@ export default function ActivityItem(props: Activity) {
                 <View style={tw`flex flex-col gap-2`}>
                     <View style={tw`flex flex-row flex-nowrap items-center justify-between gap-4`}>
                         <Text style={tw`text-base font-semibold`}>{props.title}</Text>
-                        <Tag>{props.category.name}</Tag>
+                        <Tag>{props.category}</Tag>
                     </View>
 
                     <Text style={tw`text-xs text-[#404446]`}>

@@ -22,7 +22,17 @@ export const getUsersInActivity = async (id: string) => {
 }
 
 export const createActivity = async (data: Activity) => {
-    return axios.post(`${ACTIVITY_ENDPOINT}`, data);
+    const req = {
+        title: data.title,
+        description: data.description,
+        category: data.category,
+        subcategory: data.subCategory,
+        starttime: data.startTime.getTime(),
+        endtime: data.endTime.getTime(),
+        location: data.location,
+        maxparticipants: data.maxParticipants,
+    }
+    return axios.post(`${ACTIVITY_ENDPOINT}`, req);
 }
 
 export const joinActivity = async (activityId: string, userId: string) => {

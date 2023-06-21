@@ -1,57 +1,58 @@
 /**
  * Mock data for testing
  */
-import { Activity, ActivityCategory } from "../types/Activity";
+import { Activity, CategoryData } from "../types/Activity";
 import { Metric } from "../types/Metric";
 
-export const CATEGORY_DATA: ActivityCategory[] = [
-    {
-        id: '1',
-        name: 'Sports',
-    },
-    {
-        id: '2',
-        name: 'Volunteer',
-    },
-    {
-        id: '3',
-        name: 'Fitness',
-    },
-    {
-        id: '4',
-        name: 'Wellness',
-    }
-]
+export const CATEGORY_DATA: CategoryData = {
+    'Sports': [
+        "Cycling",
+        "Basketball",
+        "Running",
+        "Boxing",
+    ],
+    'Volunteer': [
+        "Elderly Care"
+    ],
+    'Wellness': [
+        "Yoga",
+        "TCM",
+        "Meditation",
+    ],
+}
 
 export const ACTIVITY_DATA: Activity[] = [
     {
         id: '1',
         title: 'Spin Class',
-        category: CATEGORY_DATA[2],
-        dateTime: new Date(),
+        category: 'Sports',
+        subCategory: 'Spin Class',
+        startTime: new Date(),
+        endTime: new Date(),
         location: 'R1OT',
         description: 'A spin class is a high-intensity cycling workout that generally takes place on a stationary machine with a heavy, weighted flywheel that is linked to the pedals.',
-        numParticipants: 1,
         maxParticipants: 10,
     },
     {
         id: '2',
         title: 'Hot Yoga',
-        category: CATEGORY_DATA[3],
-        dateTime: new Date(),
+        category: 'Wellness',
+        subCategory: 'Yoga',
+        startTime: new Date(),
+        endTime: new Date(),
         location: 'Fitness First Clementi',
         description: 'Hot yoga is a vigorous form of yoga performed in a studio that is heated to 105 F (40 C) and has a humidity of 40 percent. The formal name for hot yoga is Bikram yoga.',
-        numParticipants: 0,
         maxParticipants: 10,
     },
     {
         id: '3',
         title: 'IPPT Training',
-        category: CATEGORY_DATA[2],
-        dateTime: new Date(),
+        category: 'Sports',
+        subCategory: 'Running',
+        startTime: new Date(),
+        endTime: new Date(),
         location: 'Sungei Gedong Camp',
         description: 'The Individual Physical Proficiency Test (IPPT) is a standard physical fitness test used by the Singapore Armed Forces (SAF), Singapore Civil Defence Force (SCDF), and Singapore Police Force (SPF) to test the basic components of physical fitness.',
-        numParticipants: 5,
         maxParticipants: 10,
     }
 ]
@@ -66,101 +67,5 @@ export const OVERVIEW_DATA: Metric[] = [
         title: 'Total Activities',
         value: '3',
         type: 'fitness',
-    }
-]
-
-export const SUBCATEGORY_SPORTS: ActivityCategory[] = [
-    {
-        id: '1',
-        name: 'Basketball',
-    },
-    {
-        id: '2',
-        name: 'Soccer',
-    }
-]
-
-export const SUBCATEGORY_LIKED: ActivityCategory[] = [
-    {
-        id: '2',
-        name: 'Soccer',
-    }
-]
-
-export const SPORTS_DATA: ActivityCategory[] = [
-    {
-        id: '1',
-        name: 'Basketball',
-    },
-    {
-        id: '2',
-        name: 'Soccer',
-    },
-    {
-        id: '3',
-        name: 'Badminton',
-    }
-]
-
-export const LEADERBOARD_DATA: { name: string, points: number }[] = [
-    {
-        name: 'John',
-        points: 1234,
-    },
-    {
-        name: 'Mary',
-        points: 1021,
-    },
-    {
-        name: 'Chye',
-        points: 1300,
-    },
-    {
-        name: 'Tan Hu Soon',
-        points: 987,
-    },
-    {
-        name: 'Bryan Lim',
-        points: 976,
-    },
-    {
-        name: 'Vivien',
-        points: 954,
-    },
-    {
-        name: 'Lau Xin Wei',
-        points: 942,
-    },
-    {
-        name: 'Leonard Lee',
-        points: 45,
-    },
-    {
-        name: 'Ng Zi Xuan',
-        points: 48,
-    },
-    {
-        name: 'Ashley Goh',
-        points: 874,
-    },
-    {
-        name: 'Natalie Tan',
-        points: 321,
-    },
-    {
-        name: 'Nicholas Chong',
-        points: 347,
-    },
-    {
-        name: 'Michael',
-        points: 358,
-    },
-    {
-        name: 'Haley',
-        points: 390,
-    },
-    {
-        name: 'Jovan',
-        points: 2,
     }
 ]

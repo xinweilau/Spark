@@ -34,14 +34,8 @@ export default function Home() {
                         id: data.id,
                         title: data.title,
                         description: data.description,
-                        category: {
-                            id: '1',
-                            name: data.category,
-                        },
-                        subCategory: {
-                            id: '1',
-                            name: data.subcategory,
-                        },
+                        category: data.category,
+                        subCategory: data.subcategory,
                         location: data.location,
                         startTime: new Date(data.starttime),
                         endTime: new Date(data.endtime),
@@ -105,9 +99,8 @@ export default function Home() {
 
                         <FlatList
                             horizontal={true}
-                            data={CATEGORY_DATA}
-                            renderItem={({ item }) => <CategoryItem {...item} />}
-                            keyExtractor={(item) => item.id}
+                            data={Object.keys(CATEGORY_DATA)}
+                            renderItem={({ item }) => <CategoryItem category={item} />}
                             ItemSeparatorComponent={() => <View style={tw`w-4`} />}
                             showsHorizontalScrollIndicator={false}
                         />

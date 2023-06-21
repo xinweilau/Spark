@@ -116,7 +116,7 @@ export default function EventDetail() {
                         <View style={tw`flex flex-col gap-4`}>
                             <View>
                                 <Text style={tw`font-semibold text-black`}>
-                                    {`${activity.category.name} | ${activity.subCategory.name}`}
+                                    {`${activity.category} | ${activity.subCategory}`}
                                 </Text>
 
                                 <View style={tw`flex flex-row gap-1 items-center`}>
