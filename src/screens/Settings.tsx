@@ -9,45 +9,50 @@ import {
   TouchableOpacity,
   Switch,
 } from 'react-native';
+import tw from 'twrnc';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import GradientButton from '../components/GradientButton';
+import useAuth from '../utils/useAuth';
+import { useNavigation } from "@react-navigation/native";
+import EditProfile from './EditProfile';
 
 const avatar = require('../../assets/images/login.svg');
 const SECTIONS = [
   {
-    header: 'Preferences',
-    icon: 'settings',
     items: [
-      { label: 'Language', value: 'English', type: 'input' },
-      { label: 'Dark Mode', value: false, type: 'boolean' },
-      { label: 'Use Wi-Fi', value: true, type: 'boolean' },
-      { label: 'Location', value: 'Los Angeles, CA', type: 'input' },
-      { label: 'Show collaborators', value: true, type: 'boolean' },
-      { label: 'Accessibility mode', value: false, type: 'boolean' },
+      { label: 'Change Password', value: false, type: 'input' },
+      { label: 'Rewards Center', value: false, type: 'input' },
+      { label: 'History', false: 'English', type: 'input' },
+      { label: 'Customer Support', value: false, type: 'input' },
+    
     ],
   },
 ];
 
 export default function Settings() {
+    const navigation = useNavigation<SettingsScreenProps>();
     const [value, setValue] = React.useState(0);
-    const { tabs, items } = React.useMemo(() => {
+    const {  items } = React.useMemo(() => {
       return {
-        tabs: SECTIONS.map(({ header, icon }) => ({
-          name: header,
-          icon,
-        })),
         items: SECTIONS[value].items,
       };
     }, [value]);
 
+    const handlePress = () => {
+      console.log("Edit Profile")
+      navigation.navigate('EditProfile')
+  }
+    const { logOutUser } = useAuth();
+    const handleLogout = () => {
+      logOutUser();
+  }
     return (
       <SafeAreaView style={{ backgroundColor: '#f8f8f8', flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Settings</Text>
-
-          <Text style={styles.subtitle}>
-            Lorem ipsum dolor sit amet consectetur.
-          </Text>
+        <View>
+        <View style={tw`flex flex-row flex-nowrap items-center justify-between pt-4`}>
+          <Text style={tw`text-2xl font-bold pb-6 px-6`}>Settings</Text>
+        </View>
         </View>
 
         <View style={styles.profile}>
@@ -59,61 +64,21 @@ export default function Settings() {
               }}
               style={styles.profileAvatar}
             />
-
-            <View style={styles.profile}>
-              <Text style={styles.profileName}>John Doe</Text>
-              <Text style={styles.profileHandle}>@john.doe</Text>
-            </View>
           </View>
+          
+          <View style={styles.profileBody}>
+              <Text style={styles.profileName}>John Doe</Text>
+            </View>
 
           <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}>
+            onPress={handlePress}>
             <View style={styles.profileAction}>
-              <Text style={styles.profileActionText}>Edit Profile</Text>
-
+              <Text style={styles.profileActionText}>Edit Name</Text>
               <FeatherIcon color="#fff" name="edit-3" size={16} />
             </View>
           </TouchableOpacity>
         </View>
 
-        <View style={styles.content}>
-          <View style={styles.tabs}>
-            {tabs.map(({ name, icon }, index) => {
-              const isActive = index === value;
-
-              return (
-                <View
-                  key={name}
-                  style={[
-                    styles.tabWrapper,
-                    isActive && { borderBottomColor: '#6366f1' },
-                  ]}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setValue(index);
-                    }}>
-                    <View style={styles.tab}>
-                      <FeatherIcon
-                        color={isActive ? '#6366f1' : '#6b7280'}
-                        name={icon}
-                        size={16}
-                      />
-
-                      <Text
-                        style={[
-                          styles.tabText,
-                          isActive && { color: '#6366f1' },
-                        ]}>
-                        {name}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              );
-            })}
-          </View>
 
           {items.map(({ label, type, value }, index) => {
             return (
@@ -135,9 +100,6 @@ export default function Settings() {
                     {type === 'input' && (
                       <Text style={styles.rowValue}>{value}</Text>
                     )}
-
-                  
-
                     {(type === 'input' || type === 'link') && (
                       <FeatherIcon
                         color="#7f7f7f"
@@ -150,7 +112,20 @@ export default function Settings() {
               </View>
             );
           })}
+        <View style={tw`flex flex-col items-center py-45 justify-between`}>
+        <GradientButton
+          onPress={handleLogout}
+          buttonLength={tw`w-7/8`}
+          buttonStyle={tw`rounded-tl-lg rounded-tr-lg rounded-bl-lg w-full shadow-lg p-7`}
+          textStyle={tw`text-white font-bold`}
+          colors={['#8658E8', '#4718AD']}
+          locations={[0, 1]}
+          start={{ x: 0.0, y: 1 }}
+          end={{ x: 1, y: 0 }}>
+          LOG OUT
+      </GradientButton>
         </View>
+        
       </ScrollView>
     </SafeAreaView>
   );
@@ -181,11 +156,20 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: '#e3e3e3',
+    alignItems: 'center'
   },
   profileHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+  },
+  profileBody:{
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#3d3d3d',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   profileAvatar: {
     width: 60,
@@ -199,12 +183,10 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '600',
     color: '#3d3d3d',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  profileHandle: {
-    marginTop: 4,
-    fontSize: 15,
-    color: '#989898',
-  },
+  
   profileAction: {
     marginTop: 16,
     paddingVertical: 10,
