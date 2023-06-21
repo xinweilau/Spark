@@ -7,8 +7,12 @@ import MetricItem from '../components/MetricItem';
 import GradientButton from '../components/GradientButton';
 import { useState } from 'react';
 import { ACTIVITY_DATA, CATEGORY_DATA, OVERVIEW_DATA } from '../utils/mock';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Home() {
+    /** The useNavigation hook is not type safe so we should be careful here */
+    const navigation = useNavigation<HomeScreenProps>();
+
     const [pointsDialogVisible, setPointsDialogVisible] = useState(false);
 
     const togglePointsDialog = () => {
@@ -33,7 +37,7 @@ export default function Home() {
                     <Button
                         icon="plus"
                         mode="contained"
-                        onPress={() => { }}
+                        onPress={() => navigation.navigate('CreateActivity')}
                         buttonColor="#F0F0FF"
                         textColor='black'
                         style={tw`rounded-xl max-w-3/4`}>

@@ -86,3 +86,18 @@ export const SUBCATEGORY_LIKED: ActivityCategory[] = [
         name: 'Soccer',
     }
 ]
+
+export const SPORTS_DATA: ActivityCategory[] = [
+    {
+        id: '1',
+        name: 'Basketball',
+    },
+    {
+        id: '2',
+        name: 'Soccer',
+    },
+    {
+        id: '3',
+        name: 'Badminton',
+    }
+]
