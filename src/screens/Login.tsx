@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Image } from 'expo-image';
 import { View, Text } from 'react-native';
-import { Button, IconButton, TextInput, TouchableRipple } from 'react-native-paper';
+import { IconButton, TextInput } from 'react-native-paper';
 import tw from 'twrnc';
-import { LinearGradient } from 'expo-linear-gradient';
 import useAuth from '../utils/useAuth';
 import { Link } from '@react-navigation/native';
 import GradientButton from '../components/GradientButton';
