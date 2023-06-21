@@ -17,7 +17,9 @@ export default function Rewards() {
 
     return (
        <View>
-        
+        <Text>
+            asd
+        </Text>
        </View>
     )
 }
