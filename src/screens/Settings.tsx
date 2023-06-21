@@ -13,12 +13,15 @@ import tw from 'twrnc';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import GradientButton from '../components/GradientButton';
 import useAuth from '../utils/useAuth';
+import { useNavigation } from "@react-navigation/native";
+import EditProfile from './EditProfile';
 
 const avatar = require('../../assets/images/login.svg');
 const SECTIONS = [
   {
     items: [
       { label: 'Change Password', value: false, type: 'input' },
+      { label: 'Rewards Center', value: false, type: 'input' },
       { label: 'History', false: 'English', type: 'input' },
       { label: 'Customer Support', value: false, type: 'input' },
     
@@ -27,12 +30,18 @@ const SECTIONS = [
 ];
 
 export default function Settings() {
+    const navigation = useNavigation<SettingsScreenProps>();
     const [value, setValue] = React.useState(0);
     const {  items } = React.useMemo(() => {
       return {
         items: SECTIONS[value].items,
       };
     }, [value]);
+
+    const handlePress = () => {
+      console.log("Edit Profile")
+      navigation.navigate('EditProfile')
+  }
     const { logOutUser } = useAuth();
     const handleLogout = () => {
       logOutUser();
@@ -62,12 +71,9 @@ export default function Settings() {
             </View>
 
           <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}>
+            onPress={handlePress}>
             <View style={styles.profileAction}>
-              <Text style={styles.profileActionText}>Edit Profile</Text>
-
+              <Text style={styles.profileActionText}>Edit Name</Text>
               <FeatherIcon color="#fff" name="edit-3" size={16} />
             </View>
           </TouchableOpacity>
@@ -106,7 +112,7 @@ export default function Settings() {
               </View>
             );
           })}
-        
+        <View style={tw`flex flex-col items-center py-45 justify-between`}>
         <GradientButton
           onPress={handleLogout}
           buttonLength={tw`w-7/8`}
@@ -118,6 +124,8 @@ export default function Settings() {
           end={{ x: 1, y: 0 }}>
           LOG OUT
       </GradientButton>
+        </View>
+        
       </ScrollView>
     </SafeAreaView>
   );

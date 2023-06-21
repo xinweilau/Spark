@@ -78,7 +78,7 @@ export default function Calendar(){
     return (
 
     // <TouchableWithoutFeedback onPress={handlePress}>
-    <View style={tw`pb-4`}>
+    <View style={tw`pb-2 py-3`}>
         <TouchableWithoutFeedback>
             <View style={tw`flex flex-col gap-8 rounded-3xl bg-[#F0F0FF] p-5 justify-between shadow-sm`}>
                 <View style={tw`flex flex-col gap-2`}>

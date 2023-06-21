@@ -10,9 +10,14 @@ type HomeStackParamList = {
     SubCategory: undefined;
 };
 
-type SettingsScreenParamList = {
+type SettingsStackParamList = {
     Settings: undefined;
+    EditProfile: undefined;
+    Rewards: undefined;
 }
+type SettingsScreenProps = NativeStackScreenProps<SettingsStackParamList, 'Settings'>;
+type EditProfileScreenProps = NativeStackScreenProps<SettingsStackParamList, 'EditProfile'>;
+type RewardsScreenProps = NativeStackScreenProps<SettingsStackParamList, 'Rewards'>;
 
 type HomeScreenProps = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 type EventDetailScreenProps = NativeStackScreenProps<HomeStackParamList, 'EventDetail'>;

@@ -1,9 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Settings from "../screens/Settings";
+import EditProfile from "../screens/EditProfile";
+import Rewards
+ from "../screens/Rewards";
+const SettingsStackNav = createNativeStackNavigator<SettingsStackParamList>();
 
-const SettingsStackNav = createNativeStackNavigator<SettingsScreenParamList>();
-
-export default function HomeStack() {
+export default function SettingsStack() {
     return (
         <SettingsStackNav.Navigator initialRouteName="Settings">
             <SettingsStackNav.Screen
@@ -12,20 +14,20 @@ export default function HomeStack() {
                 options={{
                     headerShown: false,
                 }} />
-            {/* <SettingsStackNav.Screen
-                name="EventDetail"
-                component={EventDetail}
+            <SettingsStackNav.Screen
+                name="EditProfile"
+                component={EditProfile}
                 options={{
                     headerTitleAlign: 'center',
                     headerShadowVisible: false,
                 }} />
             <SettingsStackNav.Screen
-                name="SubCategory"
-                component={SubCategory}
+                name="Rewards"
+                component={Rewards}
                 options={{
                     headerShadowVisible: false,
                     headerTitle: "",
-                }} /> */}
+                }} />
         </SettingsStackNav.Navigator>
     )
 }
