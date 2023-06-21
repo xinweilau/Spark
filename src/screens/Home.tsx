@@ -1,14 +1,18 @@
-import { FlatList, Text, View, ScrollView } from 'react-native';
+import { FlatList, Text, View, ScrollView, SafeAreaView } from 'react-native';
 import tw from 'twrnc';
-import { Dialog, IconButton, PaperProvider, Portal } from 'react-native-paper';
+import { Button, Dialog, IconButton, PaperProvider, Portal } from 'react-native-paper';
 import ActivityItem from '../components/ActivityItem';
 import CategoryItem from '../components/CategoryItem';
 import MetricItem from '../components/MetricItem';
 import GradientButton from '../components/GradientButton';
 import { useState } from 'react';
 import { ACTIVITY_DATA, CATEGORY_DATA, OVERVIEW_DATA } from '../utils/mock';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Home() {
+    /** The useNavigation hook is not type safe so we should be careful here */
+    const navigation = useNavigation<HomeScreenProps>();
+
     const [pointsDialogVisible, setPointsDialogVisible] = useState(false);
 
     const togglePointsDialog = () => {
@@ -17,8 +21,8 @@ export default function Home() {
 
     return (
         <PaperProvider>
-            <ScrollView style={tw`h-full w-full bg-white px-8 pt-8 pb-24`}>
-                <View style={tw`flex flex-col gap-6 `}>
+            <ScrollView style={tw`h-full w-full bg-white px-8 pt-8`}>
+                <View style={tw`flex flex-col gap-4 pb-30`}>
                     <View>
                         <View style={tw`flex flex-row flex-nowrap items-center justify-between pt-4`}>
                             <Text style={tw`text-2xl font-bold`}>Home</Text>
@@ -30,13 +34,33 @@ export default function Home() {
                         </View>
                     </View>
 
+                    <Button
+                        icon="plus"
+                        mode="contained"
+                        onPress={() => navigation.navigate('CreateActivity')}
+                        buttonColor="#F0F0FF"
+                        textColor='black'
+                        style={tw`rounded-xl`}>
+                        Create Activity
+                    </Button>
+
                     <View style={tw`flex flex-col gap-4 justify-center`}>
                         <Text style={tw`text-base font-medium`}>Top Activities</Text>
                         <FlatList
                             horizontal={true}
                             data={ACTIVITY_DATA}
                             renderItem={({ item }) => <ActivityItem {...item} />}
-                            keyExtractor={(item) => item.id}
+                            ItemSeparatorComponent={() => <View style={tw`w-4`} />}
+                            showsHorizontalScrollIndicator={false}
+                        />
+                    </View>
+
+                    <View style={tw`flex flex-col gap-4 justify-center`}>
+                        <Text style={tw`text-base font-medium`}>Overview</Text>
+                        <FlatList
+                            horizontal={true}
+                            data={OVERVIEW_DATA}
+                            renderItem={({ item }) => <MetricItem {...item} />}
                             ItemSeparatorComponent={() => <View style={tw`w-4`} />}
                             showsHorizontalScrollIndicator={false}
                         />
@@ -50,18 +74,6 @@ export default function Home() {
                             data={CATEGORY_DATA}
                             renderItem={({ item }) => <CategoryItem {...item} />}
                             keyExtractor={(item) => item.id}
-                            ItemSeparatorComponent={() => <View style={tw`w-4`} />}
-                            showsHorizontalScrollIndicator={false}
-                        />
-                    </View>
-
-                    <View style={tw`flex flex-col gap-4 justify-center`}>
-                        <Text style={tw`text-base font-medium`}>Overview</Text>
-
-                        <FlatList
-                            horizontal={true}
-                            data={OVERVIEW_DATA}
-                            renderItem={({ item }) => <MetricItem {...item} />}
                             ItemSeparatorComponent={() => <View style={tw`w-4`} />}
                             showsHorizontalScrollIndicator={false}
                         />

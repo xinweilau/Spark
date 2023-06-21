@@ -3,7 +3,7 @@
  * Temporary interface until we formalise the data representation.
  */
 export interface Activity {
-    id: string;
+    id?: string;
     title: string;
     description?: string;
     category: ActivityCategory;
