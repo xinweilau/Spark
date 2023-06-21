@@ -11,15 +11,15 @@ import {
 } from 'react-native';
 import tw from 'twrnc';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import GradientButton from '../components/GradientButton';
+import useAuth from '../utils/useAuth';
 
 const avatar = require('../../assets/images/login.svg');
 const SECTIONS = [
   {
-    header: 'Account',
-    icon: 'settings',
     items: [
-      { label: 'Password', value: false, type: 'input' },
-      { label: 'Notifications', false: 'English', type: 'input' },
+      { label: 'Change Password', value: false, type: 'input' },
+      { label: 'History', false: 'English', type: 'input' },
       { label: 'Customer Support', value: false, type: 'input' },
     
     ],
@@ -28,32 +28,23 @@ const SECTIONS = [
 
 export default function Settings() {
     const [value, setValue] = React.useState(0);
-    const { tabs, items } = React.useMemo(() => {
+    const {  items } = React.useMemo(() => {
       return {
-        tabs: SECTIONS.map(({ header, icon }) => ({
-          name: header,
-          icon,
-        })),
         items: SECTIONS[value].items,
       };
     }, [value]);
-
+    const { logOutUser } = useAuth();
+    const handleLogout = () => {
+      logOutUser();
+  }
     return (
       <SafeAreaView style={{ backgroundColor: '#f8f8f8', flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
-        {/* <View style={styles.header}>
-          <Text style={styles.title}>Settings</Text>
-
-          <Text style={styles.subtitle}>
-            
-          </Text>
-        </View> */}
         <View>
-                        <View style={tw`flex flex-row flex-nowrap items-center justify-between pt-4`}>
-                            <Text style={tw`text-2xl font-bold pb-6 px-6`}>Settings</Text>
-                          
-                        </View>
-                    </View>
+        <View style={tw`flex flex-row flex-nowrap items-center justify-between pt-4`}>
+          <Text style={tw`text-2xl font-bold pb-6 px-6`}>Settings</Text>
+        </View>
+        </View>
 
         <View style={styles.profile}>
           <View style={styles.profileHeader}>
@@ -82,42 +73,6 @@ export default function Settings() {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.content}>
-          <View style={styles.tabs}>
-            {tabs.map(({ name, icon }, index) => {
-              const isActive = index === value;
-
-              return (
-                <View
-                  key={name}
-                  style={[
-                    styles.tabWrapper,
-                    isActive && { borderBottomColor: '#6366f1' },
-                  ]}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      setValue(index);
-                    }}>
-                    <View style={styles.tab}>
-                      <FeatherIcon
-                        color={isActive ? '#6366f1' : '#6b7280'}
-                        name={icon}
-                        size={16}
-                      />
-
-                      <Text
-                        style={[
-                          styles.tabText,
-                          isActive && { color: '#6366f1' },
-                        ]}>
-                        {name}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              );
-            })}
-          </View>
 
           {items.map(({ label, type, value }, index) => {
             return (
@@ -139,9 +94,6 @@ export default function Settings() {
                     {type === 'input' && (
                       <Text style={styles.rowValue}>{value}</Text>
                     )}
-
-                  
-
                     {(type === 'input' || type === 'link') && (
                       <FeatherIcon
                         color="#7f7f7f"
@@ -154,7 +106,18 @@ export default function Settings() {
               </View>
             );
           })}
-        </View>
+        
+        <GradientButton
+          onPress={handleLogout}
+          buttonLength={tw`w-7/8`}
+          buttonStyle={tw`rounded-tl-lg rounded-tr-lg rounded-bl-lg w-full shadow-lg p-7`}
+          textStyle={tw`text-white font-bold`}
+          colors={['#8658E8', '#4718AD']}
+          locations={[0, 1]}
+          start={{ x: 0.0, y: 1 }}
+          end={{ x: 1, y: 0 }}>
+          LOG OUT
+      </GradientButton>
       </ScrollView>
     </SafeAreaView>
   );
