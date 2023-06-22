@@ -3,7 +3,6 @@ import { FlatList, Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } 
 import { Avatar, List } from "react-native-paper"
 import tw from "twrnc"
 
-import { LEADERBOARD_DATA } from "../utils/mock";
 import { useCallback, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllUsers } from "../services/User";
@@ -16,23 +15,24 @@ const trophy = require("../../assets/images/trophy.svg")
 export default function Leaderboard() {
     const [leaderboard, setLeaderboard] = useState<{ name: string, points: number }[]>([])
 
-    // useQuery({
-    //     queryKey: ["getAllUsers"],
-    //     queryFn: () => getAllUsers(),
-    //     onSuccess: ({ data }: { data: { result: User[] } }) => {
-    //         const { result } = data;
-    //         setLeaderboard(() => {
-    //             return result.sort((a: User, b: User) => b.points - a.points)
-    //         })
-    //     },
-    //     retry: false,
-    // })
+    useQuery({
+        queryKey: ["getAllUsers"],
+        queryFn: () => getAllUsers(),
+        onSuccess: ({ data }: { data: { result: User[] } }) => {
+            const { result } = data;
+            console.log(result);
+            setLeaderboard(() => {
+                return result.sort((a: User, b: User) => b.points - a.points)
+            })
+        },
+        retry: false,
+    })
 
     useEffect(() => {
         setLeaderboard(() => {
-            return LEADERBOARD_DATA.sort((a, b) => b.points - a.points)
+            return leaderboard.sort((a, b) => b.points - a.points)
         })
-    }, []);
+    }, [leaderboard]);
 
     const getTopThree = useCallback(() => {
         if (leaderboard.length) {
@@ -121,7 +121,7 @@ export default function Leaderboard() {
                     contentContainerStyle={tw`rounded-t-[40px] bg-white shadow-xl h-full p-4 px-8 pb-20`}>
                     <FlatList
                         horizontal={false}
-                        data={LEADERBOARD_DATA}
+                        data={leaderboard}
                         renderItem={({ item }) =>
                             <List.Item
                                 title={item.name}
@@ -217,7 +217,7 @@ export default function Leaderboard() {
                         <View style={tw`flex flex-1 bg-white shadow-md rounded-t-[50px] pb-20`}>
                             <FlatList
                                 horizontal={false}
-                                data={LEADERBOARD_DATA}
+                                data={leaderboard}
                                 renderItem={({ item }) =>
                                     <List.Item
                                         title={item.name}

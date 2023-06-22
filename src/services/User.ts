@@ -4,7 +4,7 @@ import { User } from "../types/User";
 const USER_ENDPOINT = "https://fastapi-production-c9a2.up.railway.app/user"
 
 export const getAllUsers = async () => {
-    return axios.get(`${USER_ENDPOINT}/`);
+    return axios.get(`${USER_ENDPOINT}/topusers`);
 }
 
 export const getUserById = async (id: string) => {
