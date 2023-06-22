@@ -24,39 +24,39 @@ const SECTIONS = [
       { label: 'Rewards Center', value: false, type: 'input' },
       { label: 'History', false: 'English', type: 'input' },
       { label: 'Customer Support', value: false, type: 'input' },
-    
+
     ],
   },
 ];
 
 export default function Settings() {
-    const navigation = useNavigation<SettingsScreenProps>();
-    const [value, setValue] = React.useState(0);
-    const {  items } = React.useMemo(() => {
-      return {
-        items: SECTIONS[value].items,
-      };
-    }, [value]);
+  const navigation = useNavigation<SettingsScreenProps>();
+  const [value, setValue] = React.useState(0);
+  const { items } = React.useMemo(() => {
+    return {
+      items: SECTIONS[value].items,
+    };
+  }, [value]);
 
-    const handlePress = () => {
-      console.log("Edit Profile")
-      navigation.navigate('EditProfile')
-    }
-    const handleRewards = () => {
-      console.log("Rewards")
-      navigation.navigate('Rewards')
-    }
-    const { logOutUser } = useAuth();
-    const handleLogout = () => {
-      logOutUser();
-    }
-    return (
-      <SafeAreaView style={{ backgroundColor: '#f8f8f8', flex: 1 }}>
+  const handlePress = () => {
+    console.log("Edit Profile")
+    navigation.navigate('EditProfile')
+  }
+  const handleRewards = () => {
+    console.log("Rewards")
+    navigation.navigate('Rewards')
+  }
+  const { signOut } = useAuth();
+  const handleLogout = () => {
+    signOut();
+  }
+  return (
+    <SafeAreaView style={{ backgroundColor: '#f8f8f8', flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
         <View>
-        <View style={tw`flex flex-row flex-nowrap items-center justify-between pt-4`}>
-          <Text style={tw`text-2xl font-bold pb-6 px-6`}>Settings</Text>
-        </View>
+          <View style={tw`flex flex-row flex-nowrap items-center justify-between pt-4`}>
+            <Text style={tw`text-2xl font-bold pb-6 px-6`}>Settings</Text>
+          </View>
         </View>
 
         <View style={styles.profile}>
@@ -69,10 +69,10 @@ export default function Settings() {
               style={styles.profileAvatar}
             />
           </View>
-          
+
           <View style={styles.profileBody}>
-              <Text style={styles.profileName}>John Doe</Text>
-            </View>
+            <Text style={styles.profileName}>John Doe</Text>
+          </View>
 
           <TouchableOpacity
             onPress={handlePress}>
@@ -83,15 +83,15 @@ export default function Settings() {
           </TouchableOpacity>
         </View>
 
-        
+
         <View style={[
           styles.rowWrapper,
         ]}>
-        <TouchableOpacity>
-          <View style={styles.row}>
-            <Text style={styles.rowLabel}>Change Password</Text>
-            <View style={styles.rowSpacer} />
-            <FeatherIcon
+          <TouchableOpacity>
+            <View style={styles.row}>
+              <Text style={styles.rowLabel}>Change Password</Text>
+              <View style={styles.rowSpacer} />
+              <FeatherIcon
                 color="#7f7f7f"
                 name="chevron-right"
                 size={20}
@@ -100,21 +100,21 @@ export default function Settings() {
           </TouchableOpacity>
         </View>
         <View
-            style={{
-              borderBottomColor: '#dedbd7',
-              borderBottomWidth: StyleSheet.hairlineWidth,
-            }}
-          />
+          style={{
+            borderBottomColor: '#dedbd7',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
 
         <View style={[
           styles.rowWrapper,
         ]}>
-        <TouchableOpacity
-          onPress={handleRewards}>
-          <View style={styles.row}>
-            <Text style={styles.rowLabel}>Rewards Center</Text>
-            <View style={styles.rowSpacer} />
-            <FeatherIcon
+          <TouchableOpacity
+            onPress={handleRewards}>
+            <View style={styles.row}>
+              <Text style={styles.rowLabel}>Rewards Center</Text>
+              <View style={styles.rowSpacer} />
+              <FeatherIcon
                 color="#7f7f7f"
                 name="chevron-right"
                 size={20}
@@ -123,20 +123,20 @@ export default function Settings() {
           </TouchableOpacity>
         </View>
         <View
-            style={{
-              borderBottomColor: '#dedbd7',
-              borderBottomWidth: StyleSheet.hairlineWidth,
-            }}
-          />
+          style={{
+            borderBottomColor: '#dedbd7',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
 
         <View style={[
           styles.rowWrapper,
         ]}>
-        <TouchableOpacity>
-          <View style={styles.row}>
-            <Text style={styles.rowLabel}>History</Text>
-            <View style={styles.rowSpacer} />
-            <FeatherIcon
+          <TouchableOpacity>
+            <View style={styles.row}>
+              <Text style={styles.rowLabel}>History</Text>
+              <View style={styles.rowSpacer} />
+              <FeatherIcon
                 color="#7f7f7f"
                 name="chevron-right"
                 size={20}
@@ -145,20 +145,20 @@ export default function Settings() {
           </TouchableOpacity>
         </View>
         <View
-            style={{
-              borderBottomColor: '#dedbd7',
-              borderBottomWidth: StyleSheet.hairlineWidth,
-            }}
-          />
+          style={{
+            borderBottomColor: '#dedbd7',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
 
         <View style={[
           styles.rowWrapper,
         ]}>
-        <TouchableOpacity>
-          <View style={styles.row}>
-            <Text style={styles.rowLabel}>Customer Support</Text>
-            <View style={styles.rowSpacer} />
-            <FeatherIcon
+          <TouchableOpacity>
+            <View style={styles.row}>
+              <Text style={styles.rowLabel}>Customer Support</Text>
+              <View style={styles.rowSpacer} />
+              <FeatherIcon
                 color="#7f7f7f"
                 name="chevron-right"
                 size={20}
@@ -167,61 +167,26 @@ export default function Settings() {
           </TouchableOpacity>
         </View>
         <View
-            style={{
-              borderBottomColor: '#dedbd7',
-              borderBottomWidth: StyleSheet.hairlineWidth,
-            }}
-          />  
+          style={{
+            borderBottomColor: '#dedbd7',
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
+        />
 
-{/* 
-{items.map(({ label, type, value }, index) => {
-            return (
-              <View
-                key={label}
-                style={[
-                  styles.rowWrapper,
-                  index === 0 && { borderTopWidth: 0 },
-                ]}>
-                <TouchableOpacity
-                  onPress={() => {
-                    // handle onPress
-                  }}>
-                  <View style={styles.row}>
-                    <Text style={styles.rowLabel}>{label}</Text>
-
-                    <View style={styles.rowSpacer} />
-
-                    {type === 'input' && (
-                      <Text style={styles.rowValue}>{value}</Text>
-                    )}
-                    {(type === 'input' || type === 'link') && (
-                      <FeatherIcon
-                        color="#7f7f7f"
-                        name="chevron-right"
-                        size={20}
-                      />
-                    )}
-                  </View>
-                </TouchableOpacity>
-              </View>
-            );
-          })}    */}
-          
-
-        <View style={tw`flex flex-col items-center py-45 justify-between`}>
-        <GradientButton
-          onPress={handleLogout}
-          buttonLength={tw`w-7/8`}
-          buttonStyle={tw`rounded-tl-lg rounded-tr-lg rounded-bl-lg w-full shadow-lg p-7`}
-          textStyle={tw`text-white font-bold`}
-          colors={['#8658E8', '#4718AD']}
-          locations={[0, 1]}
-          start={{ x: 0.0, y: 1 }}
-          end={{ x: 1, y: 0 }}>
-          LOG OUT
-      </GradientButton>
+        <View style={tw`flex flex-col items-center justify-between pt-20`}>
+          <GradientButton
+            onPress={handleLogout}
+            buttonLength={tw`w-7/8`}
+            buttonStyle={tw`rounded-tl-lg rounded-tr-lg rounded-bl-lg w-full shadow-lg p-7`}
+            textStyle={tw`text-white font-bold`}
+            colors={['#8658E8', '#4718AD']}
+            locations={[0, 1]}
+            start={{ x: 0.0, y: 1 }}
+            end={{ x: 1, y: 0 }}>
+            LOG OUT
+          </GradientButton>
         </View>
-        
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -259,7 +224,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  profileBody:{
+  profileBody: {
     fontSize: 17,
     fontWeight: '600',
     color: '#3d3d3d',
@@ -282,7 +247,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  
+
   profileAction: {
     marginTop: 16,
     paddingVertical: 10,
