@@ -17,7 +17,6 @@ export const CATEGORY_DATA: CategoryData = {
     'Wellness': [
         "Yoga",
         "TCM",
-        "Meditation",
     ],
 }
 
