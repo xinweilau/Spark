@@ -3,9 +3,11 @@ import { FlatList, Platform, SafeAreaView, ScrollView, StyleSheet, Text, View } 
 import { Avatar, List } from "react-native-paper"
 import tw from "twrnc"
 
-
 import { LEADERBOARD_DATA } from "../utils/mock";
 import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getAllUsers } from "../services/User";
+import { User } from "../types/User";
 
 const ParallaxScrollView = Platform.OS !== "web" && require("react-native-parallax-scroll-view")
 
@@ -13,6 +15,18 @@ const trophy = require("../../assets/images/trophy.svg")
 
 export default function Leaderboard() {
     const [leaderboard, setLeaderboard] = useState<{ name: string, points: number }[]>([])
+
+    // useQuery({
+    //     queryKey: ["getAllUsers"],
+    //     queryFn: () => getAllUsers(),
+    //     onSuccess: ({ data }: { data: { result: User[] } }) => {
+    //         const { result } = data;
+    //         setLeaderboard(() => {
+    //             return result.sort((a: User, b: User) => b.points - a.points)
+    //         })
+    //     },
+    //     retry: false,
+    // })
 
     useEffect(() => {
         setLeaderboard(() => {

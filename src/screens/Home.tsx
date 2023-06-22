@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { ACTIVITY_DATA, CATEGORY_DATA, OVERVIEW_DATA } from '../utils/mock';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
-import { getAllActivity } from '../services/Activity';
+import { getAllActivity, getTopThreeActivities } from '../services/Activity';
 import { Activity } from '../types/Activity';
 
 export default function Home() {
@@ -24,8 +24,8 @@ export default function Home() {
     }
 
     useQuery({
-        queryKey: ['getAllActivity'],
-        queryFn: () => getAllActivity(),
+        queryKey: ['getTop3Activity'],
+        queryFn: () => getTopThreeActivities(),
         onSuccess: ({ data }) => {
             const { result } = data;
             setActivity(
@@ -46,6 +46,30 @@ export default function Home() {
         },
         retry: false,
     })
+
+    // useQuery({
+    //     queryKey: ['getAllActivity'],
+    //     queryFn: () => getAllActivity(),
+    //     onSuccess: ({ data }) => {
+    //         const { result } = data;
+    //         setActivity(
+    //             result.map((data: any): Activity => {
+    //                 return {
+    //                     id: data.id,
+    //                     title: data.title,
+    //                     description: data.description,
+    //                     category: data.category,
+    //                     subCategory: data.subcategory,
+    //                     location: data.location,
+    //                     startTime: new Date(data.starttime),
+    //                     endTime: new Date(data.endtime),
+    //                     maxParticipants: data.maxparticipants,
+    //                 }
+    //             })
+    //         );
+    //     },
+    //     retry: false,
+    // })
 
     return (
         <PaperProvider>

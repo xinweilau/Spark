@@ -4,7 +4,7 @@ import { SubCategoryList } from "../screens/SubCategory";
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function SubCategoryBar(props: { id: string }) {
+export default function SubCategoryBar() {
     return (
         <Tab.Navigator
             tabBar={(props) => <EventCategoryTabBar {...props} />}
@@ -15,10 +15,10 @@ export default function SubCategoryBar(props: { id: string }) {
         >
             <Tab.Screen
                 name="All"
-                children={() => <SubCategoryList {...props} />} />
+                children={() => <SubCategoryList />} />
             <Tab.Screen
                 name="Liked"
-                children={() => <SubCategoryList {...props} liked />} />
+                children={() => <SubCategoryList liked />} />
         </Tab.Navigator>
     )
 }

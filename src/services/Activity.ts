@@ -47,3 +47,7 @@ export const joinActivity = async (activityId: string, userId: string) => {
 export const leaveActivity = async (activityId: string, userId: string) => {
     return axios.delete(`${ACTIVITY_ENDPOINT}/deleteuseractivity/${activityId}/${userId}`);
 }
+
+export const getTopThreeActivities = async () => {
+    return axios.get(`${ACTIVITY_ENDPOINT}/top3`);
+}

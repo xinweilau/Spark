@@ -69,3 +69,66 @@ export const OVERVIEW_DATA: Metric[] = [
         type: 'fitness',
     }
 ]
+
+export const LEADERBOARD_DATA: { name: string, points: number }[] = [
+    {
+        name: 'John',
+        points: 1234,
+    },
+    {
+        name: 'Mary',
+        points: 1021,
+    },
+    {
+        name: 'Chye',
+        points: 1300,
+    },
+    {
+        name: 'Tan Hu Soon',
+        points: 987,
+    },
+    {
+        name: 'Bryan Lim',
+        points: 976,
+    },
+    {
+        name: 'Vivien',
+        points: 954,
+    },
+    {
+        name: 'Lau Xin Wei',
+        points: 942,
+    },
+    {
+        name: 'Leonard Lee',
+        points: 45,
+    },
+    {
+        name: 'Ng Zi Xuan',
+        points: 48,
+    },
+    {
+        name: 'Ashley Goh',
+        points: 874,
+    },
+    {
+        name: 'Natalie Tan',
+        points: 321,
+    },
+    {
+        name: 'Nicholas Chong',
+        points: 347,
+    },
+    {
+        name: 'Michael',
+        points: 358,
+    },
+    {
+        name: 'Haley',
+        points: 390,
+    },
+    {
+        name: 'Jovan',
+        points: 2,
+    }
+]

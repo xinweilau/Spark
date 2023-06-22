@@ -1,17 +1,16 @@
 import { Image } from "expo-image"
 import { Text, TouchableWithoutFeedback, View } from "react-native"
 import tw from "twrnc"
-import { ActivityCategory } from "../types/Activity"
 import { useNavigation } from "@react-navigation/native"
 
 const basketball = require("../../assets/images/basketball.svg")
 
-export default function SubCategoryItem(props: ActivityCategory) {
+export default function SubCategoryItem({ category }: { category: string }) {
     /** The useNavigation hook is not type safe so we should be careful here */
     const navigation = useNavigation<EventCategoryScreenProps>();
 
     const handlePress = () => {
-        navigation.navigate('SubCategoryActivity', props)
+        navigation.navigate('SubCategoryActivity', category)
     }
 
     return (
@@ -26,7 +25,7 @@ export default function SubCategoryItem(props: ActivityCategory) {
                 </View>
             </TouchableWithoutFeedback>
             <Text style={tw`font-bold text-xl text-[#464646]`}>
-                {props.name}
+                {category}
             </Text>
         </View >
     )

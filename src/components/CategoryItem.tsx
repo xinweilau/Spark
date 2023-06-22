@@ -3,10 +3,12 @@ import { Platform, Text, TouchableWithoutFeedback, View } from "react-native"
 import tw from "twrnc"
 import { CATEGORY_BACKDROP } from "../utils/images";
 import { useNavigation } from "@react-navigation/native";
+import useAuth from "../utils/useAuth";
 
 export default function CategoryItem({ category }: { category: string }) {
     /** The useNavigation hook is not type safe so we should be careful here */
     const navigation = useNavigation<HomeScreenProps>();
+    const { selectCategory } = useAuth();
 
     const getImage = (category: string) => {
         const imgName = category.toLowerCase();
@@ -14,7 +16,8 @@ export default function CategoryItem({ category }: { category: string }) {
     }
 
     const handlePress = () => {
-        navigation.navigate('SubCategory', category)
+        selectCategory(category)
+        navigation.navigate('SubCategory')
     }
 
     return (
