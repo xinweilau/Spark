@@ -41,11 +41,15 @@ export default function Settings() {
     const handlePress = () => {
       console.log("Edit Profile")
       navigation.navigate('EditProfile')
-  }
+    }
+    const handleRewards = () => {
+      console.log("Rewards")
+      navigation.navigate('Rewards')
+    }
     const { logOutUser } = useAuth();
     const handleLogout = () => {
       logOutUser();
-  }
+    }
     return (
       <SafeAreaView style={{ backgroundColor: '#f8f8f8', flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -79,8 +83,98 @@ export default function Settings() {
           </TouchableOpacity>
         </View>
 
+        
+        <View style={[
+          styles.rowWrapper,
+        ]}>
+        <TouchableOpacity>
+          <View style={styles.row}>
+            <Text style={styles.rowLabel}>Change Password</Text>
+            <View style={styles.rowSpacer} />
+            <FeatherIcon
+                color="#7f7f7f"
+                name="chevron-right"
+                size={20}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
+            style={{
+              borderBottomColor: '#dedbd7',
+              borderBottomWidth: StyleSheet.hairlineWidth,
+            }}
+          />
 
-          {items.map(({ label, type, value }, index) => {
+        <View style={[
+          styles.rowWrapper,
+        ]}>
+        <TouchableOpacity
+          onPress={handleRewards}>
+          <View style={styles.row}>
+            <Text style={styles.rowLabel}>Rewards Center</Text>
+            <View style={styles.rowSpacer} />
+            <FeatherIcon
+                color="#7f7f7f"
+                name="chevron-right"
+                size={20}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
+            style={{
+              borderBottomColor: '#dedbd7',
+              borderBottomWidth: StyleSheet.hairlineWidth,
+            }}
+          />
+
+        <View style={[
+          styles.rowWrapper,
+        ]}>
+        <TouchableOpacity>
+          <View style={styles.row}>
+            <Text style={styles.rowLabel}>History</Text>
+            <View style={styles.rowSpacer} />
+            <FeatherIcon
+                color="#7f7f7f"
+                name="chevron-right"
+                size={20}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
+            style={{
+              borderBottomColor: '#dedbd7',
+              borderBottomWidth: StyleSheet.hairlineWidth,
+            }}
+          />
+
+        <View style={[
+          styles.rowWrapper,
+        ]}>
+        <TouchableOpacity>
+          <View style={styles.row}>
+            <Text style={styles.rowLabel}>Customer Support</Text>
+            <View style={styles.rowSpacer} />
+            <FeatherIcon
+                color="#7f7f7f"
+                name="chevron-right"
+                size={20}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
+            style={{
+              borderBottomColor: '#dedbd7',
+              borderBottomWidth: StyleSheet.hairlineWidth,
+            }}
+          />  
+
+{/* 
+{items.map(({ label, type, value }, index) => {
             return (
               <View
                 key={label}
@@ -111,7 +205,9 @@ export default function Settings() {
                 </TouchableOpacity>
               </View>
             );
-          })}
+          })}    */}
+          
+
         <View style={tw`flex flex-col items-center py-45 justify-between`}>
         <GradientButton
           onPress={handleLogout}

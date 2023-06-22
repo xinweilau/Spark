@@ -7,4 +7,10 @@
 export const CATEGORY_BACKDROP: { [key: string]: any } = {
     sports: require('../../assets/images/sports.svg'), 
     volunteer: require('../../assets/images/volunteer.svg'),
+    spin: require('../../assets/images/yoga.jpg'),
+    soccer: require('../../assets/images/soccer.jpg'),
+    basketball: require("../../assets/images/basketball.jpg"),
+    running: require("../../assets/images/running.jpg"),
+    cycling: require("../../assets/images/cycling.jpg"),
+    boxing: require("../../assets/images/boxing.jpg"),
 }

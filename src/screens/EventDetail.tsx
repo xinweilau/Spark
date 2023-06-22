@@ -12,8 +12,7 @@ import GradientButton from "../components/GradientButton";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getUsersInActivity, joinActivity, leaveActivity } from "../services/Activity";
 import { User } from "../types/User";
-
-const basketball = require('../../assets/images/basketball.svg');
+import { CATEGORY_BACKDROP } from "../utils/images";
 
 export default function EventDetail() {
     const [users, setUsers] = useState<User[]>([]);
@@ -24,6 +23,10 @@ export default function EventDetail() {
     const [userJoinedEvent, setUserJoinedEvent] = useState<boolean>(false);
     const [isConfirmDialogVisible, setIsConfirmDialogVisible] = useState<boolean>(false);
     const [isUserJoining, setIsUserJoining] = useState<boolean>(false);
+
+    const getActivityBackdrop = (category: string) => {
+        return CATEGORY_BACKDROP[category.toLowerCase()];
+    }
 
     const toggleConfirmDialogVisible = () => {
         setIsConfirmDialogVisible(!isConfirmDialogVisible);
@@ -84,7 +87,7 @@ export default function EventDetail() {
             <View style={tw`flex flex-col w-full h-full bg-white`}>
                 <View style={tw`w-full flex-1`}>
                     <Image
-                        source={basketball}
+                        source={getActivityBackdrop(activity.subCategory)}
                         style={tw`w-full h-full rounded-bl-3xl rounded-br-3xl`}
                         contentFit="cover" />
                 </View>
