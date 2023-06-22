@@ -9,10 +9,14 @@ import { Ionicons } from '@expo/vector-icons';
 import tw from "twrnc"
 import { formatDate, formatTime } from "../utils/dateTime";
 import GradientButton from "../components/GradientButton";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getUsersInActivity, joinActivity, leaveActivity } from "../services/Activity";
+import { User } from "../types/User";
 
 const basketball = require('../../assets/images/basketball.svg');
 
 export default function EventDetail() {
+    const [users, setUsers] = useState<User[]>([]);
     const navigation = useNavigation<EventDetailScreenProps>();
     const route = useRoute<RouteProp<EventDetailScreenProps>>();
     const activity = route.params as Activity;
@@ -28,12 +32,45 @@ export default function EventDetail() {
     const handleUserJoinEvent = () => {
         setIsUserJoining(true);
         setIsConfirmDialogVisible(false);
+        userJoinActivity({ activityId: activity.id!, userId: "1" });
+        refetch();
+    }
 
-        setTimeout(() => {
+    const handleLeaveEvent = () => {
+        setIsUserJoining(true);
+        userLeaveActivity({ activityId: activity.id!, userId: "1" });
+    }
+
+    const { refetch } = useQuery({
+        queryKey: ['eventMeta', activity.id],
+        queryFn: () => getUsersInActivity(activity.id!),
+        onSuccess: ({ data }: { data: { result: User[] } }) => {
+            data.result.forEach((user: User) => {
+                if (user.id! === 1) {
+                    setUserJoinedEvent(true);
+                }
+            });
+
+            setUsers(data.result);
+        },
+        retry: false,
+    })
+
+    const { mutate: userJoinActivity } = useMutation({
+        mutationFn: (data: { activityId: string, userId: string }) => joinActivity(data.activityId, data.userId),
+        onSuccess: () => {
             setIsUserJoining(false);
             setUserJoinedEvent(!userJoinedEvent);
-        }, 5000);
-    }
+        }
+    })
+
+    const { mutate: userLeaveActivity } = useMutation({
+        mutationFn: (data: { activityId: string, userId: string }) => leaveActivity(data.activityId, data.userId),
+        onSuccess: () => {
+            setIsUserJoining(false);
+            setUserJoinedEvent(!userJoinedEvent);
+        }
+    })
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -59,9 +96,10 @@ export default function EventDetail() {
                         <Button
                             mode="contained"
                             buttonColor="#303437"
-                            onPress={toggleConfirmDialogVisible}
+                            onPress={userJoinedEvent ? toggleConfirmDialogVisible : handleLeaveEvent}
                             loading={isUserJoining}
-                            disabled={isUserJoining}>
+                            disabled={isUserJoining}
+                            textColor="white">
                             {!userJoinedEvent ? "Join" : "Leave"}
                         </Button>
                     </View>
@@ -77,14 +115,14 @@ export default function EventDetail() {
                     <Dialog.Content>
                         <View style={tw`flex flex-col gap-4`}>
                             <View>
-                                <Text style={tw`font-semibold`}>
-                                    {activity.category.name}
+                                <Text style={tw`font-semibold text-black`}>
+                                    {`${activity.category} | ${activity.subCategory}`}
                                 </Text>
 
                                 <View style={tw`flex flex-row gap-1 items-center`}>
                                     <Ionicons name="time-outline" size={16} color="#7B6F72" />
                                     <Text style={tw`font-light`}>
-                                        {`${formatDate(activity.dateTime)} | ${formatTime(activity.dateTime)}`}
+                                        {`${formatDate(activity.startTime)} | ${formatTime(activity.startTime)}`}
                                     </Text>
                                 </View>
                             </View>
@@ -145,6 +183,16 @@ export function EventDescription({ description }: Activity) {
 }
 
 export function EventMeta(props: Activity) {
+    const [users, setUsers] = useState<User[]>([]);
+
+    useQuery({
+        queryKey: ['eventMeta', props.id],
+        queryFn: () => getUsersInActivity(props.id!),
+        onSuccess: ({ data }: { data: { result: User[] } }) => {
+            setUsers(data.result);
+        }
+    })
+
     return (
         <View style={tw`flex w-full h-full bg-white gap-4`}>
             <View style={tw`flex flex-row`}>
@@ -154,23 +202,23 @@ export function EventMeta(props: Activity) {
 
             <View style={tw`flex flex-row`}>
                 <Text style={tw`font-semibold text-[#62626F]`}>Date: </Text>
-                <Text style={tw`text-[#8A8A9D]`}>{formatDate(props.dateTime)}</Text>
+                <Text style={tw`text-[#8A8A9D]`}>{formatDate(props.startTime)}</Text>
             </View>
 
             <View style={tw`flex flex-row`}>
                 <Text style={tw`font-semibold text-[#62626F]`}>Time: </Text>
-                <Text style={tw`text-[#8A8A9D]`}>{formatTime(props.dateTime)}</Text>
+                <Text style={tw`text-[#8A8A9D]`}>{formatTime(props.startTime)}</Text>
             </View>
 
             <View style={tw`flex flex-row`}>
                 <Text style={tw`font-semibold text-[#62626F]`}>Max. participans: </Text>
-                <Text style={tw`text-[#8A8A9D]`}>{props.numParticipants}</Text>
+                <Text style={tw`text-[#8A8A9D]`}>{props.maxParticipants}</Text>
             </View>
 
             <View style={tw`flex flex-row`}>
                 <Text style={tw`font-semibold text-[#62626F]`}>Current headcount: </Text>
                 <Text style={tw`text-[#8A8A9D]`}>
-                    {`${props.maxParticipants - props.numParticipants}/${props.maxParticipants}`}
+                    {`${users.length}`}
                 </Text>
             </View>
         </View >

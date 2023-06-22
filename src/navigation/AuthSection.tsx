@@ -4,9 +4,7 @@ import Navbar from '../components/NavElement';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeStack from './HomeStack';
 import SettingsStack from './SettingsStacks'
-import Settings from '../screens/Settings'
 import Calendar from '../screens/Calendar'
-import Settings from './Settings'
 import Leaderboard from '../screens/Leaderboard';
 
 const Tab = createBottomTabNavigator();

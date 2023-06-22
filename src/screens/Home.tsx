@@ -8,16 +8,68 @@ import GradientButton from '../components/GradientButton';
 import { useState } from 'react';
 import { ACTIVITY_DATA, CATEGORY_DATA, OVERVIEW_DATA } from '../utils/mock';
 import { useNavigation } from '@react-navigation/native';
+import { useQuery } from '@tanstack/react-query';
+import { getAllActivity, getTopThreeActivities } from '../services/Activity';
+import { Activity } from '../types/Activity';
 
 export default function Home() {
     /** The useNavigation hook is not type safe so we should be careful here */
     const navigation = useNavigation<HomeScreenProps>();
+    const [activity, setActivity] = useState<Activity[]>([]);
 
     const [pointsDialogVisible, setPointsDialogVisible] = useState(false);
 
     const togglePointsDialog = () => {
         setPointsDialogVisible(!pointsDialogVisible);
     }
+
+    useQuery({
+        queryKey: ['getTop3Activity'],
+        queryFn: () => getTopThreeActivities(),
+        onSuccess: ({ data }) => {
+            const { result } = data;
+            setActivity(
+                result.map((data: any): Activity => {
+                    return {
+                        id: data.id,
+                        title: data.title,
+                        description: data.description,
+                        category: data.category,
+                        subCategory: data.subcategory,
+                        location: data.location,
+                        startTime: new Date(data.starttime),
+                        endTime: new Date(data.endtime),
+                        maxParticipants: data.maxparticipants,
+                    }
+                })
+            );
+        },
+        retry: false,
+    })
+
+    // useQuery({
+    //     queryKey: ['getAllActivity'],
+    //     queryFn: () => getAllActivity(),
+    //     onSuccess: ({ data }) => {
+    //         const { result } = data;
+    //         setActivity(
+    //             result.map((data: any): Activity => {
+    //                 return {
+    //                     id: data.id,
+    //                     title: data.title,
+    //                     description: data.description,
+    //                     category: data.category,
+    //                     subCategory: data.subcategory,
+    //                     location: data.location,
+    //                     startTime: new Date(data.starttime),
+    //                     endTime: new Date(data.endtime),
+    //                     maxParticipants: data.maxparticipants,
+    //                 }
+    //             })
+    //         );
+    //     },
+    //     retry: false,
+    // })
 
     return (
         <PaperProvider>
@@ -48,7 +100,7 @@ export default function Home() {
                         <Text style={tw`text-base font-medium`}>Top Activities</Text>
                         <FlatList
                             horizontal={true}
-                            data={ACTIVITY_DATA}
+                            data={activity}
                             renderItem={({ item }) => <ActivityItem {...item} />}
                             ItemSeparatorComponent={() => <View style={tw`w-4`} />}
                             showsHorizontalScrollIndicator={false}
@@ -71,9 +123,8 @@ export default function Home() {
 
                         <FlatList
                             horizontal={true}
-                            data={CATEGORY_DATA}
-                            renderItem={({ item }) => <CategoryItem {...item} />}
-                            keyExtractor={(item) => item.id}
+                            data={Object.keys(CATEGORY_DATA)}
+                            renderItem={({ item }) => <CategoryItem category={item} />}
                             ItemSeparatorComponent={() => <View style={tw`w-4`} />}
                             showsHorizontalScrollIndicator={false}
                         />

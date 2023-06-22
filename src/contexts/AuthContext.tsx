@@ -6,6 +6,8 @@ export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: { children: ReactNode }) => {
     // TODO: replace with actual AuthData
     const [isUserAuthenticated, setIsUserAuthenticated] = useState<boolean>(false);
+    const [selectedCategory, setSelectedCategory] = useState<string>("");
+
 
     // TODO: replace with a call to service that will authenticate and return user data
     const logInUser = () => {
@@ -16,8 +18,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }: { childr
         setIsUserAuthenticated(false);
     };
 
+    const selectCategory = (category: string) => {
+        setSelectedCategory(category)
+    }
+
     return (
         <AuthContext.Provider value={{
+            selectedCategory,
+            selectCategory,
             isUserAuthenticated,
             logInUser,
             signOut

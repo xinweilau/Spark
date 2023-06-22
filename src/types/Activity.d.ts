@@ -6,14 +6,14 @@ export interface Activity {
     id?: string;
     title: string;
     description?: string;
-    category: ActivityCategory;
-    dateTime: Date;
+    category: string;
+    subCategory: string;
+    startTime: Date;
+    endTime: Date;
     location: string;
-    numParticipants: number;
     maxParticipants: number;
 }
 
-export interface ActivityCategory {
-    id: string;
-    name: string;
-}
+type CategoryData = {
+    [category: string]: string[];
+};

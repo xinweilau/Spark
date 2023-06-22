@@ -4,37 +4,57 @@ import tw from "twrnc"
 import { CATEGORY_DATA } from "../utils/mock"
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Activity } from "../types/Activity";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatDate, formatTime } from "../utils/dateTime";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { Dropdown } from 'react-native-element-dropdown';
 import GradientButton from "../components/GradientButton";
 import { useNavigation } from "@react-navigation/native";
+import { useMutation } from "@tanstack/react-query";
+import { createActivity } from "../services/Activity";
 
 export default function CreateActivity() {
     const navigation = useNavigation<HomeScreenProps>();
-    const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
+    const [showStartDatePicker, setShowStartDatePicker] = useState<boolean>(false);
+    const [showEndDatePicker, setShowEndDatePicker] = useState<boolean>(false);
+    const [selectedCategory, setSelectedCategory] = useState<string>("");
+    const [subCategoryData, setSubCategoryData] = useState<{ label: string, value: string }[]>([]);
 
-    const { control, handleSubmit, setValue, formState: { errors } } = useForm<Activity>({
+    const { control, handleSubmit, getValues, setValue, formState: { errors } } = useForm<Activity>({
         defaultValues: {
             title: "",
             description: "",
             category: undefined,
-            dateTime: undefined,
+            subCategory: undefined,
+            startTime: undefined,
+            endTime: undefined,
             location: "",
-            numParticipants: 0,
             maxParticipants: 0,
         }
     });
 
-    const onDateTimeSelect = (date: Date) => {
-        setValue("dateTime", date);
-        setShowDatePicker(false);
+    const onDateTimeSelect = (control: "startTime" | "endTime", date: Date) => {
+        setValue(control, date);
+
+        if (control === "startTime") {
+            toggleShowStartDatePicker();
+        }
+        toggleShowEndDatePicker();
     }
 
+
     const onSubmitActivityForm: SubmitHandler<Activity> = (data: Activity) => {
-        console.log(data);
+        mutate({
+            title: "",
+            description: "",
+            category: "SPORTS",
+            subCategory: "FOOTBALL",
+            startTime: new Date(),
+            endTime: new Date(),
+            location: "",
+            maxParticipants: 0,
+        });
         navigation.goBack();
     }
 
@@ -42,8 +62,12 @@ export default function CreateActivity() {
         return new Date(dateTime)
     }
 
-    const toggleShowDatePicker = () => {
-        setShowDatePicker(!showDatePicker)
+    const toggleShowStartDatePicker = () => {
+        setShowStartDatePicker(!showStartDatePicker)
+    }
+
+    const toggleShowEndDatePicker = () => {
+        setShowEndDatePicker(!showEndDatePicker)
     }
 
     const formatFullDateTime = (date: Date) => {
@@ -60,16 +84,47 @@ export default function CreateActivity() {
         return formattedDate
     }
 
+    const { mutate } = useMutation({
+        mutationKey: ['createActivity'],
+        mutationFn: (data: Activity) => createActivity(data),
+        onSuccess: () => {
+            navigation.goBack();
+        }
+    })
+
+    useEffect(() => {
+        if (selectedCategory === "") {
+            return
+        }
+
+        const subCatData = CATEGORY_DATA[selectedCategory].map((subCategory) => {
+            return {
+                label: subCategory,
+                value: subCategory,
+            }
+        })
+        setSubCategoryData(subCatData)
+    }, [selectedCategory])
+
+    const getCategoryData = () => {
+        return Object.keys(CATEGORY_DATA).map((key) => {
+            return {
+                label: key,
+                value: key,
+            }
+        });
+    }
+
     return (
         <ScrollView style={tw`bg-white w-full h-full`}>
 
             <View style={tw`flex flex-col gap-4 p-4 pb-24`}>
                 <View style={tw`flex flex-col`}>
                     <Text style={tw`text-[#464646] font-semibold pb-2`}>
-                        Date and Time
+                        Start Date and Time
                     </Text>
                     <Controller
-                        name="dateTime"
+                        name="startTime"
                         control={control}
                         rules={{
                             required: true,
@@ -85,12 +140,12 @@ export default function CreateActivity() {
                                         icon="calendar"
                                         color="#464646"
                                         style={tw`rounded-sm`}
-                                        onPress={toggleShowDatePicker} />
+                                        onPress={toggleShowStartDatePicker} />
                                 }
-                                error={!!errors.dateTime}
+                                error={!!errors.startTime}
                                 style={tw`bg-white`}
                                 onBlur={onBlur}
-                                onPressIn={toggleShowDatePicker}
+                                onPressIn={toggleShowStartDatePicker}
                                 onChangeText={(date: string) => {
                                     onChange(onDatePickerChangeDate(date))
                                 }}
@@ -98,10 +153,51 @@ export default function CreateActivity() {
                         )}
                     />
                     <DateTimePickerModal
-                        isVisible={showDatePicker}
+                        isVisible={showStartDatePicker}
                         mode="datetime"
-                        onConfirm={onDateTimeSelect}
-                        onCancel={toggleShowDatePicker}
+                        onConfirm={(selected: Date) => onDateTimeSelect("startTime", selected)}
+                        onCancel={toggleShowStartDatePicker}
+                    />
+                </View>
+
+                <View style={tw`flex flex-col`}>
+                    <Text style={tw`text-[#464646] font-semibold pb-2`}>
+                        End Date and Time
+                    </Text>
+                    <Controller
+                        name="endTime"
+                        control={control}
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <TextInput
+                                mode="outlined"
+                                placeholder={formatFullDateTime(new Date())}
+                                placeholderTextColor="#48454E"
+                                editable={false}
+                                right={
+                                    <TextInput.Icon
+                                        icon="calendar"
+                                        color="#464646"
+                                        style={tw`rounded-sm`}
+                                        onPress={toggleShowEndDatePicker} />
+                                }
+                                error={!!errors.endTime}
+                                style={tw`bg-white`}
+                                onBlur={onBlur}
+                                onPressIn={toggleShowEndDatePicker}
+                                onChangeText={(date: string) => {
+                                    onChange(onDatePickerChangeDate(date))
+                                }}
+                                value={value && `${formatDate(value)} at ${formatTime(value)}`} />
+                        )}
+                    />
+                    <DateTimePickerModal
+                        isVisible={showEndDatePicker}
+                        mode="datetime"
+                        onConfirm={(selected: Date) => onDateTimeSelect("endTime", selected)}
+                        onCancel={toggleShowEndDatePicker}
                     />
                 </View>
 
@@ -141,15 +237,50 @@ export default function CreateActivity() {
                         }}
                         render={({ field: { onChange, onBlur, value } }) => (
                             <Dropdown
-                                data={CATEGORY_DATA}
+                                data={getCategoryData()}
                                 search
-                                labelField="name"
-                                valueField="id"
+                                labelField="label"
+                                valueField="value"
                                 searchPlaceholder="Search..."
                                 placeholderStyle={tw`text-[#48454E]`}
                                 value={value}
                                 onBlur={onBlur}
-                                onChange={onChange}
+                                onChange={(selected) => {
+                                    setSelectedCategory(selected.value);
+                                    onChange(selected.value);
+                                }}
+                                style={
+                                    tw.style(
+                                        'border p-2 rounded border-[#78747D]',
+                                        errors.category && 'border-[#A53328] border-2'
+                                    )
+                                }
+                            />
+                        )}
+                    />
+                </View>
+
+                <View style={tw`flex flex-col`}>
+                    <Text style={tw`text-[#464646] font-semibold pb-2`}>
+                        Sub Category
+                    </Text>
+                    <Controller
+                        name="subCategory"
+                        control={control}
+                        rules={{
+                            required: true,
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <Dropdown
+                                data={subCategoryData}
+                                search
+                                labelField="label"
+                                valueField="value"
+                                searchPlaceholder="Search..."
+                                placeholderStyle={tw`text-[#48454E]`}
+                                value={value}
+                                onBlur={onBlur}
+                                onChange={(selected) => onChange(selected.value)}
                                 style={
                                     tw.style(
                                         'border p-2 rounded border-[#78747D]',
@@ -163,7 +294,7 @@ export default function CreateActivity() {
 
                 <View style={tw`flex flex-col`}>
                     <Text style={tw`text-[#464646] font-semibold`}>
-                        No. of Participants
+                        Max No. of Participants
                     </Text>
                     <Controller
                         name="maxParticipants"
