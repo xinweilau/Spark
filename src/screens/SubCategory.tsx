@@ -4,8 +4,10 @@ import SubCategoryBar from "../navigation/SubCategoryBar"
 import SubCategoryItem from "../components/SubCategoryItem"
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { CATEGORY_DATA } from "../utils/mock";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../utils/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import { getActivitySubCategory } from "../services/Activity";
 
 export default function SubCategory() {
     const { selectedCategory } = useAuth();
@@ -29,10 +31,22 @@ export default function SubCategory() {
 export function SubCategoryList({ liked }: { liked?: boolean }) {
     // Currently, ID is not used. Future implementation will use ID to fetch data from the backend.
     const { selectedCategory } = useAuth();
+    const [subCatList, setSubCatList] = useState<any[]>([]);
+
 
     const getSubcategorySports = () => {
         return CATEGORY_DATA[selectedCategory];
     }
+
+    useQuery({
+        queryKey: ['subCategory', selectedCategory],
+        queryFn: () => getActivitySubCategory(selectedCategory),
+        onSuccess: ({ data }: any) => {
+            console.log(data)
+        },
+        retry: false,
+    })
+
     return (
         <View style={tw`bg-white h-full w-full`}>
             <FlatList

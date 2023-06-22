@@ -14,7 +14,7 @@ export const getActivityById = async (id: string) => {
 }
 
 export const getActivitySubCategory = async (subCategory: string) => {
-    return axios.get(`${ACTIVITY_ENDPOINT}/subcategory/${subCategory}`);
+    return axios.get(`${ACTIVITY_ENDPOINT}/subcat/${subCategory}`);
 }
 
 export const getUsersInActivity = async (id: string) => {
