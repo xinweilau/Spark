@@ -15,7 +15,7 @@ export default function SubCategoryItem({ category }: { category: string }) {
     }
 
     const getBackdropImage = () => {
-        const imgName = category.toLowerCase();
+        const imgName = category.toLowerCase().replace(" ", "");
         return CATEGORY_BACKDROP[imgName];
     }
 
