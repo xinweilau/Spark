@@ -42,6 +42,14 @@ export default function Leaderboard() {
         return []
     }, [leaderboard])
 
+    const getRemainUser = useCallback(() => {
+        if (leaderboard.length) {
+            return leaderboard.slice(3)
+        }
+
+        return []
+    }, [leaderboard])
+
     const ComponentToRender = Platform.select({
         default: () => {
             return (
@@ -121,7 +129,7 @@ export default function Leaderboard() {
                     contentContainerStyle={tw`rounded-t-[40px] bg-white shadow-xl h-full p-4 px-8 pb-20`}>
                     <FlatList
                         horizontal={false}
-                        data={leaderboard}
+                        data={getRemainUser()}
                         renderItem={({ item }) =>
                             <List.Item
                                 title={item.name}
@@ -217,7 +225,7 @@ export default function Leaderboard() {
                         <View style={tw`flex flex-1 bg-white shadow-md rounded-t-[50px] pb-20`}>
                             <FlatList
                                 horizontal={false}
-                                data={leaderboard}
+                                data={getRemainUser()}
                                 renderItem={({ item }) =>
                                     <List.Item
                                         title={item.name}
